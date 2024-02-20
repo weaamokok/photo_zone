@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "110493406334",
+    "project_id": "photozone-93b48",
+    "storage_bucket": "photozone-93b48.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110493406334:android:07cf6e71366b394022342f",
+        "android_client_info": {
+          "package_name": "com.photo_zone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwO_DkkD0SneIsZCtPfYYaQF8bJsaw0mY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -20,13 +20,13 @@ class MainLayoutPage extends StatelessWidget {
       ),
       extendBody: true,
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
+        decoration: BoxDecoration(color: Colors.white,
             border: Border.all(width: 1),
             borderRadius: BorderRadius.circular(
               40,
             )),
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-        height: 70,
+        height: 75,
         child: DotNavigationBar(
           splashColor: Colors.black,
           backgroundColor: Colors.white,

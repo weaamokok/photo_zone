@@ -7,8 +7,8 @@ import 'home_page.dart';
 class HomeComposer {
   static Widget makeHomePage() {
     return BlocProvider<AddCategoryCubit>(
-      create: (context) => AddCategoryCubit(),
-      child: HomePage(),
+      create: (context) => AddCategoryCubit()..fetchFolders(),
+      child: const HomePage(),
     );
   }
 }

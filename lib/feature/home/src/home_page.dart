@@ -367,7 +367,7 @@ class HomePage extends StatelessWidget {
                                               fontSize: 15,
                                               fontFamily: 'Cairo',
                                               fontWeight: FontWeight.bold,
-                                              color: Color(0xff282828)
+                                              color: const Color(0xff282828)
                                                   .withOpacity(.8)),
                                         ),
                                       ),

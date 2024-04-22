@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:photo_zone/feature/gallery_layout/src/add_image_sheet_composer.dart';
-import 'package:photo_zone/feature/gallery_layout/src/logic/cubit/gallery_manager_cubit.dart';
 import 'package:photo_zone/feature/home/src/home_composer.dart';
-import 'package:photo_zone/feature/home/src/home_page.dart';
 import 'package:photo_zone/feature/main_layout/src/logic/cubit/main_layout_cubit.dart';
 import 'package:photo_zone/helpers/image_picker.dart';
 

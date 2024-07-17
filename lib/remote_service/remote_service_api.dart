@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:photo_zone/domain_model/category_model.dart';
 
 class RemoteServiceApi {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -49,6 +50,9 @@ class RemoteServiceApi {
     } on FirebaseException catch (e) {
       return left(e.message!);
     }
+  }
+  Future<void>addCategoryLocal({required CategoryModel categoryModel})async{
+
   }
 
   Future<Either<String, List<QueryDocumentSnapshot>>> fetchFolders() async {

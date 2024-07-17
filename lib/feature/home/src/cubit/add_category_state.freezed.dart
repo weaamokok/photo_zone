@@ -22,7 +22,7 @@ AddCategoryState _$AddCategoryStateFromJson(Map<String, dynamic> json) {
 mixin _$AddCategoryState {
   int get selectedColorIndex => throw _privateConstructorUsedError;
   bool get isSubmitting => throw _privateConstructorUsedError;
-  List<CategoryModel> get folders => throw _privateConstructorUsedError;
+  List<CategoryModel>? get folders => throw _privateConstructorUsedError;
   bool get isSuccess => throw _privateConstructorUsedError;
   bool get isFailure => throw _privateConstructorUsedError;
 
@@ -41,7 +41,7 @@ abstract class $AddCategoryStateCopyWith<$Res> {
   $Res call(
       {int selectedColorIndex,
       bool isSubmitting,
-      List<CategoryModel> folders,
+      List<CategoryModel>? folders,
       bool isSuccess,
       bool isFailure});
 }
@@ -61,7 +61,7 @@ class _$AddCategoryStateCopyWithImpl<$Res, $Val extends AddCategoryState>
   $Res call({
     Object? selectedColorIndex = null,
     Object? isSubmitting = null,
-    Object? folders = null,
+    Object? folders = freezed,
     Object? isSuccess = null,
     Object? isFailure = null,
   }) {
@@ -74,10 +74,10 @@ class _$AddCategoryStateCopyWithImpl<$Res, $Val extends AddCategoryState>
           ? _value.isSubmitting
           : isSubmitting // ignore: cast_nullable_to_non_nullable
               as bool,
-      folders: null == folders
+      folders: freezed == folders
           ? _value.folders
           : folders // ignore: cast_nullable_to_non_nullable
-              as List<CategoryModel>,
+              as List<CategoryModel>?,
       isSuccess: null == isSuccess
           ? _value.isSuccess
           : isSuccess // ignore: cast_nullable_to_non_nullable
@@ -101,7 +101,7 @@ abstract class _$$AddCategoryStateImplCopyWith<$Res>
   $Res call(
       {int selectedColorIndex,
       bool isSubmitting,
-      List<CategoryModel> folders,
+      List<CategoryModel>? folders,
       bool isSuccess,
       bool isFailure});
 }
@@ -119,7 +119,7 @@ class __$$AddCategoryStateImplCopyWithImpl<$Res>
   $Res call({
     Object? selectedColorIndex = null,
     Object? isSubmitting = null,
-    Object? folders = null,
+    Object? folders = freezed,
     Object? isSuccess = null,
     Object? isFailure = null,
   }) {
@@ -132,10 +132,10 @@ class __$$AddCategoryStateImplCopyWithImpl<$Res>
           ? _value.isSubmitting
           : isSubmitting // ignore: cast_nullable_to_non_nullable
               as bool,
-      folders: null == folders
+      folders: freezed == folders
           ? _value._folders
           : folders // ignore: cast_nullable_to_non_nullable
-              as List<CategoryModel>,
+              as List<CategoryModel>?,
       isSuccess: null == isSuccess
           ? _value.isSuccess
           : isSuccess // ignore: cast_nullable_to_non_nullable
@@ -154,7 +154,7 @@ class _$AddCategoryStateImpl implements _AddCategoryState {
   const _$AddCategoryStateImpl(
       {required this.selectedColorIndex,
       required this.isSubmitting,
-      required final List<CategoryModel> folders,
+      required final List<CategoryModel>? folders,
       required this.isSuccess,
       required this.isFailure})
       : _folders = folders;
@@ -166,12 +166,14 @@ class _$AddCategoryStateImpl implements _AddCategoryState {
   final int selectedColorIndex;
   @override
   final bool isSubmitting;
-  final List<CategoryModel> _folders;
+  final List<CategoryModel>? _folders;
   @override
-  List<CategoryModel> get folders {
+  List<CategoryModel>? get folders {
+    final value = _folders;
+    if (value == null) return null;
     if (_folders is EqualUnmodifiableListView) return _folders;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_folders);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
@@ -224,7 +226,7 @@ abstract class _AddCategoryState implements AddCategoryState {
   const factory _AddCategoryState(
       {required final int selectedColorIndex,
       required final bool isSubmitting,
-      required final List<CategoryModel> folders,
+      required final List<CategoryModel>? folders,
       required final bool isSuccess,
       required final bool isFailure}) = _$AddCategoryStateImpl;
 
@@ -236,7 +238,7 @@ abstract class _AddCategoryState implements AddCategoryState {
   @override
   bool get isSubmitting;
   @override
-  List<CategoryModel> get folders;
+  List<CategoryModel>? get folders;
   @override
   bool get isSuccess;
   @override

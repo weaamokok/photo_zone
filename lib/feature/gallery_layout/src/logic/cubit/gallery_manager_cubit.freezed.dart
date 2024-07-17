@@ -16,37 +16,10 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$GalleryManagerState {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    required TResult orElse(),
-  }) =>
+  GenericState<List<Photo>> get photos => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $GalleryManagerStateCopyWith<GalleryManagerState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -55,6 +28,10 @@ abstract class $GalleryManagerStateCopyWith<$Res> {
   factory $GalleryManagerStateCopyWith(
           GalleryManagerState value, $Res Function(GalleryManagerState) then) =
       _$GalleryManagerStateCopyWithImpl<$Res, GalleryManagerState>;
+  @useResult
+  $Res call({GenericState<List<Photo>> photos});
+
+  $GenericStateCopyWith<List<Photo>, $Res> get photos;
 }
 
 /// @nodoc
@@ -66,100 +43,106 @@ class _$GalleryManagerStateCopyWithImpl<$Res, $Val extends GalleryManagerState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? photos = null,
+  }) {
+    return _then(_value.copyWith(
+      photos: null == photos
+          ? _value.photos
+          : photos // ignore: cast_nullable_to_non_nullable
+              as GenericState<List<Photo>>,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $GenericStateCopyWith<List<Photo>, $Res> get photos {
+    return $GenericStateCopyWith<List<Photo>, $Res>(_value.photos, (value) {
+      return _then(_value.copyWith(photos: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
-abstract class _$$InitialImplCopyWith<$Res> {
-  factory _$$InitialImplCopyWith(
-          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
-      __$$InitialImplCopyWithImpl<$Res>;
+abstract class _$$GalleryManagerStateImplCopyWith<$Res>
+    implements $GalleryManagerStateCopyWith<$Res> {
+  factory _$$GalleryManagerStateImplCopyWith(_$GalleryManagerStateImpl value,
+          $Res Function(_$GalleryManagerStateImpl) then) =
+      __$$GalleryManagerStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({GenericState<List<Photo>> photos});
+
+  @override
+  $GenericStateCopyWith<List<Photo>, $Res> get photos;
 }
 
 /// @nodoc
-class __$$InitialImplCopyWithImpl<$Res>
-    extends _$GalleryManagerStateCopyWithImpl<$Res, _$InitialImpl>
-    implements _$$InitialImplCopyWith<$Res> {
-  __$$InitialImplCopyWithImpl(
-      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
+class __$$GalleryManagerStateImplCopyWithImpl<$Res>
+    extends _$GalleryManagerStateCopyWithImpl<$Res, _$GalleryManagerStateImpl>
+    implements _$$GalleryManagerStateImplCopyWith<$Res> {
+  __$$GalleryManagerStateImplCopyWithImpl(_$GalleryManagerStateImpl _value,
+      $Res Function(_$GalleryManagerStateImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? photos = null,
+  }) {
+    return _then(_$GalleryManagerStateImpl(
+      photos: null == photos
+          ? _value.photos
+          : photos // ignore: cast_nullable_to_non_nullable
+              as GenericState<List<Photo>>,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$InitialImpl implements _Initial {
-  const _$InitialImpl();
+class _$GalleryManagerStateImpl implements _GalleryManagerState {
+  _$GalleryManagerStateImpl({required this.photos});
+
+  @override
+  final GenericState<List<Photo>> photos;
 
   @override
   String toString() {
-    return 'GalleryManagerState.initial()';
+    return 'GalleryManagerState(photos: $photos)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InitialImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$GalleryManagerStateImpl &&
+            (identical(other.photos, photos) || other.photos == photos));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, photos);
 
+  @JsonKey(ignore: true)
   @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-  }) {
-    return initial();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-  }) {
-    return initial?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
+  @pragma('vm:prefer-inline')
+  _$$GalleryManagerStateImplCopyWith<_$GalleryManagerStateImpl> get copyWith =>
+      __$$GalleryManagerStateImplCopyWithImpl<_$GalleryManagerStateImpl>(
+          this, _$identity);
 }
 
-abstract class _Initial implements GalleryManagerState {
-  const factory _Initial() = _$InitialImpl;
+abstract class _GalleryManagerState implements GalleryManagerState {
+  factory _GalleryManagerState(
+          {required final GenericState<List<Photo>> photos}) =
+      _$GalleryManagerStateImpl;
+
+  @override
+  GenericState<List<Photo>> get photos;
+  @override
+  @JsonKey(ignore: true)
+  _$$GalleryManagerStateImplCopyWith<_$GalleryManagerStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

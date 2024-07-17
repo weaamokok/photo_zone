@@ -9,10 +9,10 @@ part of 'add_category_state.dart';
 _$AddCategoryStateImpl _$$AddCategoryStateImplFromJson(
         Map<String, dynamic> json) =>
     _$AddCategoryStateImpl(
-      selectedColorIndex: json['selectedColorIndex'] as int,
+      selectedColorIndex: (json['selectedColorIndex'] as num).toInt(),
       isSubmitting: json['isSubmitting'] as bool,
-      folders: (json['folders'] as List<dynamic>)
-          .map((e) => CategoryModel.fromJson(e as String))
+      folders: (json['folders'] as List<dynamic>?)
+          ?.map((e) => CategoryModel.fromJson(e as String))
           .toList(),
       isSuccess: json['isSuccess'] as bool,
       isFailure: json['isFailure'] as bool,

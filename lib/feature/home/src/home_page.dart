@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:enefty_icons/enefty_icons.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:photo_zone/feature/gallery_layout/src/gallery_layout_page.dart';
+import 'package:photo_zone/feature/gallery_layout/src/galler_layout_composer.dart';
 import 'package:photo_zone/feature/home/src/cubit/add_category_cubit.dart';
+import 'package:photo_zone/feature/home/src/widget/add_category_bottomsheet.dart';
 import 'package:stacked_card_carousel/stacked_card_carousel.dart';
 
 import 'cubit/add_category_state.dart';
@@ -36,18 +38,15 @@ class HomePage extends StatelessWidget {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.black)),
+                            shape: BoxShape.circle, border: Border.all()),
                         width: 45,
                         height: 45,
                         padding: const EdgeInsets.only(bottom: 5),
                         child: CircleAvatar(
                           radius: 25,
-                          backgroundColor: const Color(0xffffcd69),
                           child: IconButton(
                             icon: const Icon(
                               EneftyIcons.add_outline,
-                              color: Colors.black,
                             ),
                             onPressed: () {
                               showModalBottomSheet(
@@ -55,169 +54,7 @@ class HomePage extends StatelessWidget {
                                 builder: (_) =>
                                     BlocProvider<AddCategoryCubit>.value(
                                   value: context.read<AddCategoryCubit>(),
-                                  child: Container(
-                                      child: Form(
-                                    child: BlocConsumer<AddCategoryCubit,
-                                        AddCategoryState>(
-                                      listener: (context, state) {
-                                        if (state.isSuccess) {
-                                          Navigator.canPop(context)
-                                              ? Navigator.pop(context)
-                                              : null;
-                                          context
-                                              .read<AddCategoryCubit>()
-                                              .categoryNameController
-                                              .dispose();
-                                          context
-                                              .read<AddCategoryCubit>()
-                                              .fetchFolders();
-                                        }
-                                        if (state.isFailure) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                            content: Text('Error'),
-                                          ));
-                                        }
-                                      },
-                                      builder: (context, state) {
-                                        final bloc =
-                                            context.read<AddCategoryCubit>();
-                                        return Column(
-                                          children: [
-                                            const SizedBox(height: 20),
-                                            const Text(
-                                              'Add Category',
-                                              style: TextStyle(fontSize: 16),
-                                            ),
-                                            const SizedBox(height: 20),
-                                            Container(
-                                              margin:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 50),
-                                              width: double.infinity,
-                                              height: 50,
-                                              child: TextFormField(
-                                                  controller: bloc
-                                                      .categoryNameController,
-                                                  decoration: InputDecoration(
-                                                      hintText:
-                                                          'Category Name..',
-                                                      contentPadding:
-                                                          const EdgeInsets
-                                                              .symmetric(
-                                                              horizontal: 35),
-                                                      hintStyle:
-                                                          const TextStyle(
-                                                              fontSize: 16),
-                                                      border: OutlineInputBorder(
-                                                          borderSide:
-                                                              const BorderSide(
-                                                                  color: Color(
-                                                                      0xff282828)),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      25)))),
-                                            ),
-                                            const SizedBox(height: 20),
-                                            GridView.builder(
-                                              shrinkWrap: true,
-                                              itemCount: colors.length,
-                                              gridDelegate:
-                                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                                      childAspectRatio: 2,
-                                                      crossAxisCount: 5),
-                                              itemBuilder: (context, index) =>
-                                                  InkWell(
-                                                onTap: () =>
-                                                    bloc.selectFolderColor(
-                                                        color: colors[index]
-                                                            .toString(),
-                                                        index: index),
-                                                child: Container(
-                                                  height: 5,
-                                                  width: 30,
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 5,
-                                                          top: 1,
-                                                          left: 1,
-                                                          right: 1),
-                                                  margin: const EdgeInsets
-                                                      .symmetric(horizontal: 5),
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          color: const Color(
-                                                              0xff282828)),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20)),
-                                                  child: Container(
-                                                      width: 30,
-                                                      height: 5,
-                                                      decoration: BoxDecoration(
-                                                          color: state.selectedColorIndex ==
-                                                                  index
-                                                              ? colors[index]
-                                                                  .withOpacity(
-                                                                      .2)
-                                                              : colors[index],
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      20))),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(height: 20),
-                                            Container(
-                                              width: double.infinity,
-                                              height: 50,
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 5,
-                                                  top: 1,
-                                                  left: 1,
-                                                  right: 1),
-                                              margin:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 50),
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: const Color(
-                                                          0xff282828)),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          25)),
-                                              child: InkWell(
-                                                  onTap: () {
-                                                    bloc.addCategory();
-                                                  },
-                                                  child: Container(
-                                                      decoration: BoxDecoration(
-                                                          color: const Color(
-                                                              0xffffcd69),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      25)),
-                                                      width: double.infinity,
-                                                      height: 50,
-                                                      child: state.isSubmitting
-                                                          ? SizedBox(
-                                                              width: 20,
-                                                              height: 20,
-                                                              child:
-                                                                  const CircularProgressIndicator
-                                                                      .adaptive())
-                                                          : const Center(
-                                                              child: Text(
-                                                                  'add')))),
-                                            )
-                                          ],
-                                        );
-                                      },
-                                    ),
-                                  )),
+                                  child: const AddCategoryBottomSheet(),
                                 ),
                               );
                             },
@@ -227,7 +64,8 @@ class HomePage extends StatelessWidget {
                       Container(
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            border: Border.all(color: Colors.black)),
+                            border: Border.all(
+                                color: Theme.of(context).canvasColor.onColor)),
                         width: 45,
                         height: 45,
                         padding: const EdgeInsets.only(bottom: 5),
@@ -237,7 +75,6 @@ class HomePage extends StatelessWidget {
                           child: IconButton(
                             icon: const Icon(
                               EneftyIcons.notification_bing_outline,
-                              color: Colors.black,
                             ),
                             onPressed: () {},
                           ),
@@ -248,28 +85,30 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Divider(color: Color(0xff282828).withOpacity(.1)),
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, top: 30),
+            const Divider(),
+            const Padding(
+              padding: EdgeInsets.only(left: 20.0, top: 30),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Row(
                   children: [
-                    Icon(EneftyIcons.folder_2_outline,
-                        size: 25, color: Color(0xff282828).withOpacity(.7)),
+                    Icon(
+                      EneftyIcons.folder_2_outline,
+                      size: 25,
+                    ),
                     SizedBox(
                       width: 10,
                     ),
                     Text('Your Folders',
                         textAlign: TextAlign.left,
                         style: TextStyle(
-                            fontFamily: 'Cairo',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Color(0xff282828).withOpacity(.8))),
+                          fontFamily: 'Cairo',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        )),
                   ],
                 ),
               ),
@@ -278,119 +117,136 @@ class HomePage extends StatelessWidget {
               child: StackedCardCarousel(
                   initialOffset: 2,
                   spaceBetweenItems: 70,
-                  items: state.folders.isEmpty
-                      ? categories
-                          .map(
-                            (e) => InkWell(
-                              // onTap: () => Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder: (context) => GalleryLayoutPage(),
-                              //     )),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 5.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: colors[e.indexOf(e)],
-                                          borderRadius: const BorderRadius.only(
-                                              topLeft: Radius.circular(60),
-                                              topRight: Radius.circular(10))),
-                                      height: 30,
-                                      width: 90,
-                                      padding: EdgeInsets.only(right: 10),
-                                      child: Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Text(
-                                          categories[e.indexOf(e)],
-                                          style: TextStyle(
-                                              overflow: TextOverflow.fade,
-                                              fontSize: 15,
-                                              fontFamily: 'Cairo',
-                                              fontWeight: FontWeight.bold,
-                                              color: Color(0xff282828)
-                                                  .withOpacity(.8)),
+                  items: state.folders != null
+                      ? state.folders!.isEmpty
+                          ? categories
+                              .map(
+                                (e) => InkWell(
+                                  // onTap: () => Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //       builder: (context) => GalleryLayoutPage(),
+                                  //     )),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              color: colors[e.indexOf(e)],
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                      topLeft:
+                                                          Radius.circular(60),
+                                                      topRight:
+                                                          Radius.circular(10))),
+                                          height: 30,
+                                          width: 90,
+                                          padding:
+                                              const EdgeInsets.only(right: 10),
+                                          child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Text(
+                                              categories[e.indexOf(e)],
+                                              style: const TextStyle(
+                                                overflow: TextOverflow.fade,
+                                                fontSize: 15,
+                                                fontFamily: 'Cairo',
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: colors[e.indexOf(e)],
-                                          borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(10),
-                                            bottomRight: Radius.circular(10),
-                                            bottomLeft: Radius.circular(10),
-                                          )),
-                                      width: double.infinity,
-                                      height: 150,
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 50, vertical: 20),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          )
-                          .toList()
-                      : state.folders
-                          .map(
-                            (e) => InkWell(
-                              onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => GalleryLayoutPage(),
-                                  )),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 5.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: Color(e.folderColor),
-                                          borderRadius: const BorderRadius.only(
-                                              topLeft: Radius.circular(60),
-                                              topRight: Radius.circular(10))),
-                                      height: 30,
-                                      width: 90,
-                                      padding: EdgeInsets.only(right: 10),
-                                      child: Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Text(
-                                          e.categoryName,
-                                          style: TextStyle(
-                                              overflow: TextOverflow.fade,
-                                              fontSize: 15,
-                                              fontFamily: 'Cairo',
-                                              fontWeight: FontWeight.bold,
-                                              color: const Color(0xff282828)
-                                                  .withOpacity(.8)),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              color: colors[e.indexOf(e)],
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                topLeft: Radius.circular(10),
+                                                bottomRight:
+                                                    Radius.circular(10),
+                                                bottomLeft: Radius.circular(10),
+                                              )),
+                                          width: double.infinity,
+                                          height: 150,
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 50, vertical: 20),
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: Color(e.folderColor),
-                                          borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(10),
-                                            bottomRight: Radius.circular(10),
-                                            bottomLeft: Radius.circular(10),
-                                          )),
-                                      width: double.infinity,
-                                      height: 150,
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 50, vertical: 20),
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ),
-                          )
-                          .toList()),
+                              )
+                              .toList()
+                          : state.folders!
+                              .map(
+                                (e) => InkWell(
+                                  onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            GalleryComposer.makeGallery(
+                                                categoryId: e.id),
+                                      )),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              color: Color(e.folderColor),
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                      topLeft:
+                                                          Radius.circular(60),
+                                                      topRight:
+                                                          Radius.circular(10))),
+                                          height: 30,
+                                          width: 90,
+                                          padding:
+                                              const EdgeInsets.only(right: 10),
+                                          child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Text(
+                                              e.categoryName,
+                                              style: TextStyle(
+                                                  overflow: TextOverflow.fade,
+                                                  fontSize: 15,
+                                                  fontFamily: 'Cairo',
+                                                  fontWeight: FontWeight.bold,
+                                                  color: const Color(0xff282828)
+                                                      .withOpacity(.8)),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              color: Color(e.folderColor),
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                topLeft: Radius.circular(10),
+                                                bottomRight:
+                                                    Radius.circular(10),
+                                                bottomLeft: Radius.circular(10),
+                                              )),
+                                          width: double.infinity,
+                                          height: 150,
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 50, vertical: 20),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .toList()
+                      : []),
             )
           ],
         );
@@ -400,11 +256,11 @@ class HomePage extends StatelessWidget {
 }
 
 List<Color> colors = [
-  Color.fromARGB(255, 225, 201, 253),
+  const Color.fromARGB(255, 225, 201, 253),
   const Color(0xffBFD8AF),
   const Color(0xffE6A4B4),
   const Color(0xffB7C9F2),
-  Color.fromARGB(255, 209, 208, 244),
+  const Color.fromARGB(255, 209, 208, 244),
 ];
 List<String> categories = [
   'Biology',

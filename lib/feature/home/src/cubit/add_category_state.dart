@@ -9,7 +9,7 @@ class AddCategoryState with _$AddCategoryState {
   const factory AddCategoryState(
       {required int selectedColorIndex,
       required bool isSubmitting,
-      required List<CategoryModel> folders,
+      required List<CategoryModel>? folders,
       required bool isSuccess,
       required bool isFailure}) = _AddCategoryState;
   factory AddCategoryState.fromJson(Map<String, dynamic> json) =>

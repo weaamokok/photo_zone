@@ -7,7 +7,7 @@ part of 'image_model.dart';
 // **************************************************************************
 
 _$PhotoImpl _$$PhotoImplFromJson(Map<String, dynamic> json) => _$PhotoImpl(
-      photo: (json['photo'] as List<dynamic>).map((e) => e as int).toList(),
+      photo: json['photo'] as String,
       categoryId: json['categoryId'] as int?,
       createdAt: DateTime.parse(json['createdAt'] as String),
     );

@@ -15,9 +15,10 @@ class MainLayoutCubit extends Cubit<MainLayoutState> {
 
   void addPhoto({required File image, int? categoryId}) async {
     print(';here');
+    final imagePath = image.path;
     await localStorage.addPhoto(
         photoModel: HivePhoto(
-      image: image,
+      image: imagePath,
       createdAt: DateTime.now(),
       categoryId: categoryId,
     ));

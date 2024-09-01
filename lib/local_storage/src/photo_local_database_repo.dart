@@ -42,12 +42,15 @@ class LocalStorage {
   Future<Either<String, List<HivePhoto>?>> getPhotos({int? categoryId}) async {
     try {
       final box = await _localStorage.photosBox;
-      final categories = box.values
-          .where((element) => element.categoryId == categoryId)
-          .toList();
+      print(categoryId);
+      final categories = box.values.where((element) {
+        if (categoryId == null) return true;
+        return element.categoryId == categoryId;
+      }).toList();
 
       return Right(categories);
     } catch (l) {
+      print('${l.toString()}');
       return Left(l.toString());
     }
   }
@@ -59,7 +62,7 @@ class LocalStorage {
 
       return const Right(unit);
     } catch (error) {
-      print('');
+      print(error.toString());
       return Left(error.toString());
     }
   }

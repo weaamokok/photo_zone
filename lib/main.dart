@@ -5,6 +5,7 @@ import 'package:photo_zone/deps.dart';
 import 'package:photo_zone/feature/main_layout/src/main_layout_composer.dart';
 import 'package:photo_zone/firebase_options.dart';
 import 'package:photo_zone/local_storage/src/hive_init.dart';
+import 'package:photo_zone/ui/route.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       // Theme config for FlexColorScheme version 7.3.x. Make sure you use
 // same or higher package version, but still same major version. If you
@@ -87,7 +88,7 @@ class MyApp extends StatelessWidget {
 // themeMode: ThemeMode.system,
 
       themeMode: ThemeMode.system,
-      home: MainLayoutComposer.makeMainLayoutPage(),
+      routerConfig: router,
     );
   }
 }

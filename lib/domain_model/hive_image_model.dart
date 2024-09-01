@@ -26,7 +26,7 @@ class HivePhoto extends HiveObject {
     required this.createdAt,
   });
   @HiveField(0)
-  File? image;
+  String image;
   @HiveField(1)
   int? categoryId;
   @HiveField(2)

@@ -8,7 +8,7 @@ part 'image_model.g.dart';
 class Photo with _$Photo {
   const factory Photo({
     // required int id,
-    required List<int> photo,
+    required String photo,
     int? categoryId,
     required DateTime createdAt,
   }) = _Photo;

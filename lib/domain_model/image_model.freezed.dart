@@ -21,7 +21,7 @@ Photo _$PhotoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Photo {
 // required int id,
-  List<int> get photo => throw _privateConstructorUsedError;
+  String get photo => throw _privateConstructorUsedError;
   int? get categoryId => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
 
@@ -35,7 +35,7 @@ abstract class $PhotoCopyWith<$Res> {
   factory $PhotoCopyWith(Photo value, $Res Function(Photo) then) =
       _$PhotoCopyWithImpl<$Res, Photo>;
   @useResult
-  $Res call({List<int> photo, int? categoryId, DateTime createdAt});
+  $Res call({String photo, int? categoryId, DateTime createdAt});
 }
 
 /// @nodoc
@@ -59,7 +59,7 @@ class _$PhotoCopyWithImpl<$Res, $Val extends Photo>
       photo: null == photo
           ? _value.photo
           : photo // ignore: cast_nullable_to_non_nullable
-              as List<int>,
+              as String,
       categoryId: freezed == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
@@ -79,7 +79,7 @@ abstract class _$$PhotoImplCopyWith<$Res> implements $PhotoCopyWith<$Res> {
       __$$PhotoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<int> photo, int? categoryId, DateTime createdAt});
+  $Res call({String photo, int? categoryId, DateTime createdAt});
 }
 
 /// @nodoc
@@ -99,9 +99,9 @@ class __$$PhotoImplCopyWithImpl<$Res>
   }) {
     return _then(_$PhotoImpl(
       photo: null == photo
-          ? _value._photo
+          ? _value.photo
           : photo // ignore: cast_nullable_to_non_nullable
-              as List<int>,
+              as String,
       categoryId: freezed == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
@@ -118,24 +118,14 @@ class __$$PhotoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PhotoImpl with DiagnosticableTreeMixin implements _Photo {
   const _$PhotoImpl(
-      {required final List<int> photo,
-      this.categoryId,
-      required this.createdAt})
-      : _photo = photo;
+      {required this.photo, this.categoryId, required this.createdAt});
 
   factory _$PhotoImpl.fromJson(Map<String, dynamic> json) =>
       _$$PhotoImplFromJson(json);
 
 // required int id,
-  final List<int> _photo;
-// required int id,
   @override
-  List<int> get photo {
-    if (_photo is EqualUnmodifiableListView) return _photo;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_photo);
-  }
-
+  final String photo;
   @override
   final int? categoryId;
   @override
@@ -161,7 +151,7 @@ class _$PhotoImpl with DiagnosticableTreeMixin implements _Photo {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PhotoImpl &&
-            const DeepCollectionEquality().equals(other._photo, _photo) &&
+            (identical(other.photo, photo) || other.photo == photo) &&
             (identical(other.categoryId, categoryId) ||
                 other.categoryId == categoryId) &&
             (identical(other.createdAt, createdAt) ||
@@ -170,8 +160,7 @@ class _$PhotoImpl with DiagnosticableTreeMixin implements _Photo {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_photo), categoryId, createdAt);
+  int get hashCode => Object.hash(runtimeType, photo, categoryId, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -189,14 +178,14 @@ class _$PhotoImpl with DiagnosticableTreeMixin implements _Photo {
 
 abstract class _Photo implements Photo {
   const factory _Photo(
-      {required final List<int> photo,
+      {required final String photo,
       final int? categoryId,
       required final DateTime createdAt}) = _$PhotoImpl;
 
   factory _Photo.fromJson(Map<String, dynamic> json) = _$PhotoImpl.fromJson;
 
   @override // required int id,
-  List<int> get photo;
+  String get photo;
   @override
   int? get categoryId;
   @override

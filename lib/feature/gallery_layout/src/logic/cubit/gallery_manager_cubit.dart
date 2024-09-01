@@ -15,24 +15,28 @@ class GalleryManagerCubit extends Cubit<GalleryManagerState> {
     //remote
     // final response = await api.fetchFolders();
     final response = await localRepo.getPhotos(categoryId: categoryId);
-    response.fold(
-        (l) => emit(state.copyWith(photos: const GenericState.failedProcess())),
-        (r) => emit(state.copyWith(
-            //remote imp
-            // folders:r==null?[] :r
-            //     .map((e) => CategoryModel(
-            //         categoryName: e.get('category_name'),
-            //         folderColor: e.get('folder_color'),
-            //         createdAt: e.get('created_at').toString()))
-            //     .toList()
-            photos: GenericState.loaded(r == null
-                ? []
-                : r
-                    .map((e) => Photo(
-                        photo: e.image?.readAsBytesSync() ?? [],
-                        categoryId: e.categoryId,
-                        createdAt: e.createdAt))
-                    .toList()))));
+    response.fold((l) {
+      print('error: $l');
+      emit(state.copyWith(photos: const GenericState.failedProcess()));
+    }, (r) {
+      print('object: $r');
+      emit(state.copyWith(
+          //remote imp
+          // folders:r==null?[] :r
+          //     .map((e) => CategoryModel(
+          //         categoryName: e.get('category_name'),
+          //         folderColor: e.get('folder_color'),
+          //         createdAt: e.get('created_at').toString()))
+          //     .toList()
+          photos: GenericState.loaded(r == null
+              ? []
+              : r
+                  .map((e) => Photo(
+                      photo: e.image,
+                      categoryId: e.categoryId,
+                      createdAt: e.createdAt))
+                  .toList())));
+    });
   }
 
   final LocalStorage localRepo;

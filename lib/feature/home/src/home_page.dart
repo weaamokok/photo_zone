@@ -3,6 +3,7 @@ import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:photo_zone/feature/gallery_layout/src/galler_layout_composer.dart';
 import 'package:photo_zone/feature/home/src/cubit/add_category_cubit.dart';
 import 'package:photo_zone/feature/home/src/widget/add_category_bottomsheet.dart';
@@ -89,26 +90,36 @@ class HomePage extends StatelessWidget {
               height: 20,
             ),
             const Divider(),
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(left: 20.0, top: 30),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(
-                      EneftyIcons.folder_2_outline,
-                      size: 25,
+                    Row(
+                      children: [
+                        Icon(
+                          EneftyIcons.folder_2_outline,
+                          size: 25,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text('Your Folders',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontFamily: 'Cairo',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            )),
+                      ],
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text('Your Folders',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontFamily: 'Cairo',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        )),
+                    TextButton(
+                        onPressed: () {
+                          context.pushNamed('gallery');
+                        },
+                        child: Text('view all'))
                   ],
                 ),
               ),

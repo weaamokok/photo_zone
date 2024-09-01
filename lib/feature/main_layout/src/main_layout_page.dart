@@ -3,6 +3,7 @@ import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:photo_zone/feature/gallery_layout/src/add_image_sheet_composer.dart';
 import 'package:photo_zone/feature/home/src/home_composer.dart';
@@ -54,7 +55,9 @@ class MainLayoutPage extends StatelessWidget {
 
                 if (image != null) {
                   bloc.addPhoto(image: image);
+                   context.pushNamed('photo', extra: image.path);
                 }
+
                 // showModalBottomSheet(
                 //   context: context,
                 //   builder: (_) => AddImageComposer.makeAddImageSheet(),

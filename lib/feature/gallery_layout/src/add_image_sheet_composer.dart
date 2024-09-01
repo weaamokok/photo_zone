@@ -9,7 +9,8 @@ class AddImageComposer {
   static Widget makeAddImageSheet() {
     return BlocProvider<GalleryManagerCubit>(
       create: (context) =>
-          GalleryManagerCubit(localRepo: locator<LocalStorage>()),
+          GalleryManagerCubit(localRepo: locator<LocalStorage>())
+            ..fetchPhotos(),
       child: const AddImageSheet(),
     );
   }

@@ -17,7 +17,7 @@ class HivePhotoAdapter extends TypeAdapter<HivePhoto> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return HivePhoto(
-      image: fields[0] as File?,
+      image: fields[0] as String,
       categoryId: fields[1] as int?,
       createdAt: fields[2] as DateTime,
     );

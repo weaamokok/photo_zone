@@ -10,10 +10,15 @@ part 'photo_cubit.freezed.dart';
 
 class PhotoCubit extends Cubit<PhotoState> {
   PhotoCubit({required this.localRepo})
-      : super(const PhotoState(selectedCategory: null,
-            categories: GenericState.initial(), isLoading: false)) {
+      : super(const PhotoState(
+            selectedCategory: null,
+            categories: GenericState.initial(),
+            isLoading: false)) {
     print('init cubit');
     getCategories();
+  }
+  selectCategory({required HiveCategory selectedCategory}) {
+    emit(state.copyWith(selectedCategory: selectedCategory.key));
   }
 
   void getCategories() async {

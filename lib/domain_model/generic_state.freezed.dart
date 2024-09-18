@@ -90,6 +90,9 @@ class _$GenericStateCopyWithImpl<T, $Res, $Val extends GenericState<T>>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of GenericState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -106,6 +109,9 @@ class __$$InitialImplCopyWithImpl<T, $Res>
   __$$InitialImplCopyWithImpl(
       _$InitialImpl<T> _value, $Res Function(_$InitialImpl<T>) _then)
       : super(_value, _then);
+
+  /// Create a copy of GenericState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -226,6 +232,9 @@ class __$$LoadingImplCopyWithImpl<T, $Res>
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl<T> _value, $Res Function(_$LoadingImpl<T>) _then)
       : super(_value, _then);
+
+  /// Create a copy of GenericState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -349,6 +358,8 @@ class __$$LoadedImplCopyWithImpl<T, $Res>
       _$LoadedImpl<T> _value, $Res Function(_$LoadedImpl<T>) _then)
       : super(_value, _then);
 
+  /// Create a copy of GenericState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -388,7 +399,9 @@ class _$LoadedImpl<T> implements _Loaded<T> {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GenericState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$LoadedImplCopyWith<T, _$LoadedImpl<T>> get copyWith =>
@@ -479,7 +492,10 @@ abstract class _Loaded<T> implements GenericState<T> {
   const factory _Loaded(final T data) = _$LoadedImpl<T>;
 
   T get data;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GenericState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LoadedImplCopyWith<T, _$LoadedImpl<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -501,6 +517,8 @@ class __$$FailedProcessImplCopyWithImpl<T, $Res>
       $Res Function(_$FailedProcessImpl<T>) _then)
       : super(_value, _then);
 
+  /// Create a copy of GenericState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -539,7 +557,9 @@ class _$FailedProcessImpl<T> implements _FailedProcess<T> {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GenericState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FailedProcessImplCopyWith<T, _$FailedProcessImpl<T>> get copyWith =>
@@ -632,7 +652,10 @@ abstract class _FailedProcess<T> implements GenericState<T> {
       _$FailedProcessImpl<T>;
 
   String? get message;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GenericState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FailedProcessImplCopyWith<T, _$FailedProcessImpl<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -651,6 +674,9 @@ class __$$EmptyPageImplCopyWithImpl<T, $Res>
   __$$EmptyPageImplCopyWithImpl(
       _$EmptyPageImpl<T> _value, $Res Function(_$EmptyPageImpl<T>) _then)
       : super(_value, _then);
+
+  /// Create a copy of GenericState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

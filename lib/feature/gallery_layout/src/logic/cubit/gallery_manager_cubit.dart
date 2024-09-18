@@ -19,6 +19,10 @@ class GalleryManagerCubit extends Cubit<GalleryManagerState> {
       print('error: $l');
       emit(state.copyWith(photos: const GenericState.failedProcess()));
     }, (r) {
+      if (r != null && r.isEmpty) {
+        emit(state.copyWith(photos: const GenericState.emptyPage()));
+        return;
+      }
       print('object: $r');
       emit(state.copyWith(
           //remote imp

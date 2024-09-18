@@ -19,6 +19,7 @@ class HivePhotoAdapter extends TypeAdapter<HivePhoto> {
     return HivePhoto(
       image: fields[0] as String,
       categoryId: fields[1] as int?,
+      id: fields[3] as dynamic,
       createdAt: fields[2] as DateTime,
     );
   }
@@ -26,13 +27,15 @@ class HivePhotoAdapter extends TypeAdapter<HivePhoto> {
   @override
   void write(BinaryWriter writer, HivePhoto obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.image)
       ..writeByte(1)
       ..write(obj.categoryId)
       ..writeByte(2)
-      ..write(obj.createdAt);
+      ..write(obj.createdAt)
+      ..writeByte(3)
+      ..write(obj.id);
   }
 
   @override

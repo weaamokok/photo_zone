@@ -55,11 +55,49 @@ class LocalStorage {
     }
   }
 
-  Future<Either<String, Unit>> addPhoto({required HivePhoto photoModel}) async {
+  Future<Either<String, HivePhoto>> getPhoto({int? photoKey}) async {
     try {
       final box = await _localStorage.photosBox;
-      await box.add(photoModel).then((value) => print('added'));
+      final photo = box.values.firstWhere((element) {
+        if (photoKey == null) return true;
+        print('elemrnmt key ${element.key}');
+        return element.key == photoKey;
+      });
 
+      if (photo == null) {
+        return Left('Photo not found');
+      }
+      return Right(photo);
+    } catch (l) {
+      print(' error in get photo ${l.toString()}');
+      return Left(l.toString());
+    }
+  }
+
+  Future<Either<String, int>> addPhoto({required HivePhoto photoModel}) async {
+    try {
+      final box = await _localStorage.photosBox;
+      final id = await box.add(photoModel);
+      return Right(id);
+    } catch (error) {
+      print(" error in adding ${error.toString()}");
+      return Left(error.toString());
+    }
+  }
+
+  updatePhoto({
+    required HivePhoto photoModel,
+  }) async {
+    try {
+      final box = await _localStorage.photosBox;
+      final index = box.values.toList().indexWhere((element) {
+        print('element ${element.key} photo to edit ${photoModel.id}');
+        return element.key == photoModel.id;
+      });
+      print('index $index');
+      if (index != -1) {
+        await box.putAt(index, photoModel).then((value) => print('updated '));
+      }
       return const Right(unit);
     } catch (error) {
       print(error.toString());

@@ -2,7 +2,6 @@ import 'package:go_router/go_router.dart';
 import 'package:photo_zone/feature/gallery_layout/src/galler_layout_composer.dart';
 import 'package:photo_zone/feature/main_layout/src/main_layout_composer.dart';
 import 'package:photo_zone/feature/photo/photo_maker.dart';
-import 'package:photo_zone/feature/photo/photo_page.dart';
 
 final router = GoRouter(
   routes: [
@@ -19,8 +18,18 @@ final router = GoRouter(
     GoRoute(
       path: '/photo',
       name: 'photo',
-      builder: (context, state) =>
-          PhotoMaker.makePhotoPage(photoPath: state.extra as String),
+      builder: (context, state) {
+        final extras = state.extra as PhotoExtra;
+        print('photo key ${extras.photo} ');
+        return PhotoMaker.makePhotoPage(
+            photoPath: extras.photoPath, photoKey: extras.photo);
+      },
     )
   ],
 );
+
+class PhotoExtra {
+  final String photoPath;
+  final int photo;
+  PhotoExtra({required this.photoPath, required this.photo});
+}

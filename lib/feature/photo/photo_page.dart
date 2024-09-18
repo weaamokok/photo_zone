@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photo_zone/feature/home/src/home_page.dart';
 
 import 'package:photo_zone/feature/photo/logic/photo_cubit.dart';
+import 'package:go_router/go_router.dart';
 
 class PhotoPage extends StatelessWidget {
   const PhotoPage({required this.photoPath, super.key});
@@ -59,9 +60,12 @@ class PhotoPage extends StatelessWidget {
                                 ),
                                 onPressed: () {
                                   if (state.selectedCategory != null) {
-                                    // context.read<PhotoCubit>().addPhotoToCategory(state.selectedCategory!, photoPath);
+                                    print('add photo to category');
+                                    context
+                                        .read<PhotoCubit>()
+                                        .addPhotoToCategory();
                                   }
-                                  Navigator.pop(context);
+                                  context.replaceNamed('gallery');
                                 },
                               ),
                             ),
@@ -85,13 +89,17 @@ class PhotoPage extends StatelessWidget {
                                 .map(
                                   (e) => InkWell(
                                     onTap: () {
-                                      context.read<PhotoCubit>().selectCategory(
-                                          selectedCategory: e.key);
+                                      context
+                                          .read<PhotoCubit>()
+                                          .selectCategory(selectedCategory: e);
                                     },
                                     child: Container(
                                       margin: const EdgeInsetsDirectional.only(
                                           end: 5),
                                       decoration: BoxDecoration(
+                                          color: state.selectedCategory == e.key
+                                              ? Colors.pink.withOpacity(.5)
+                                              : Colors.transparent,
                                           border: Border.all(
                                             color: Colors.black26,
                                           ),
@@ -110,8 +118,9 @@ class PhotoPage extends StatelessWidget {
                                 )
                                 .toList()
                               ..add(InkWell(
-                                child: Container(    padding: const EdgeInsets.symmetric(
-                                          vertical: 5, horizontal: 10),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 10),
                                   margin:
                                       const EdgeInsetsDirectional.only(end: 5),
                                   decoration: BoxDecoration(
@@ -119,7 +128,7 @@ class PhotoPage extends StatelessWidget {
                                         color: Colors.black26,
                                       ),
                                       borderRadius: BorderRadius.circular(20)),
-                                  child: Row(
+                                  child: const Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Icon(
@@ -132,9 +141,7 @@ class PhotoPage extends StatelessWidget {
                                       ),
                                       Text(
                                         'add category',
-                                        style: TextStyle(
-                                       
-                                            color: Colors.black45),
+                                        style: TextStyle(color: Colors.black45),
                                       ),
                                     ],
                                   ),
@@ -142,6 +149,9 @@ class PhotoPage extends StatelessWidget {
                               )),
                           ),
                         ),
+                        const SizedBox(
+                          height: 40,
+                        )
                         // ElevatedButton(
                         //   style: ButtonStyle(
                         //       elevation: const WidgetStatePropertyAll(0),

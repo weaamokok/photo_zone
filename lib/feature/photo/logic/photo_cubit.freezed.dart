@@ -20,8 +20,11 @@ mixin _$PhotoState {
       throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   int? get selectedCategory => throw _privateConstructorUsedError;
+  GenericState<HivePhoto> get photo => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PhotoState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PhotoStateCopyWith<PhotoState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -35,9 +38,11 @@ abstract class $PhotoStateCopyWith<$Res> {
   $Res call(
       {GenericState<List<HiveCategory>> categories,
       bool isLoading,
-      int? selectedCategory});
+      int? selectedCategory,
+      GenericState<HivePhoto> photo});
 
   $GenericStateCopyWith<List<HiveCategory>, $Res> get categories;
+  $GenericStateCopyWith<HivePhoto, $Res> get photo;
 }
 
 /// @nodoc
@@ -50,12 +55,15 @@ class _$PhotoStateCopyWithImpl<$Res, $Val extends PhotoState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PhotoState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? categories = null,
     Object? isLoading = null,
     Object? selectedCategory = freezed,
+    Object? photo = null,
   }) {
     return _then(_value.copyWith(
       categories: null == categories
@@ -70,15 +78,31 @@ class _$PhotoStateCopyWithImpl<$Res, $Val extends PhotoState>
           ? _value.selectedCategory
           : selectedCategory // ignore: cast_nullable_to_non_nullable
               as int?,
+      photo: null == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as GenericState<HivePhoto>,
     ) as $Val);
   }
 
+  /// Create a copy of PhotoState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $GenericStateCopyWith<List<HiveCategory>, $Res> get categories {
     return $GenericStateCopyWith<List<HiveCategory>, $Res>(_value.categories,
         (value) {
       return _then(_value.copyWith(categories: value) as $Val);
+    });
+  }
+
+  /// Create a copy of PhotoState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $GenericStateCopyWith<HivePhoto, $Res> get photo {
+    return $GenericStateCopyWith<HivePhoto, $Res>(_value.photo, (value) {
+      return _then(_value.copyWith(photo: value) as $Val);
     });
   }
 }
@@ -94,10 +118,13 @@ abstract class _$$PhotoStateImplCopyWith<$Res>
   $Res call(
       {GenericState<List<HiveCategory>> categories,
       bool isLoading,
-      int? selectedCategory});
+      int? selectedCategory,
+      GenericState<HivePhoto> photo});
 
   @override
   $GenericStateCopyWith<List<HiveCategory>, $Res> get categories;
+  @override
+  $GenericStateCopyWith<HivePhoto, $Res> get photo;
 }
 
 /// @nodoc
@@ -108,12 +135,15 @@ class __$$PhotoStateImplCopyWithImpl<$Res>
       _$PhotoStateImpl _value, $Res Function(_$PhotoStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PhotoState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? categories = null,
     Object? isLoading = null,
     Object? selectedCategory = freezed,
+    Object? photo = null,
   }) {
     return _then(_$PhotoStateImpl(
       categories: null == categories
@@ -128,6 +158,10 @@ class __$$PhotoStateImplCopyWithImpl<$Res>
           ? _value.selectedCategory
           : selectedCategory // ignore: cast_nullable_to_non_nullable
               as int?,
+      photo: null == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as GenericState<HivePhoto>,
     ));
   }
 }
@@ -138,7 +172,8 @@ class _$PhotoStateImpl implements _PhotoState {
   const _$PhotoStateImpl(
       {required this.categories,
       required this.isLoading,
-      required this.selectedCategory});
+      required this.selectedCategory,
+      required this.photo});
 
   @override
   final GenericState<List<HiveCategory>> categories;
@@ -146,10 +181,12 @@ class _$PhotoStateImpl implements _PhotoState {
   final bool isLoading;
   @override
   final int? selectedCategory;
+  @override
+  final GenericState<HivePhoto> photo;
 
   @override
   String toString() {
-    return 'PhotoState(categories: $categories, isLoading: $isLoading, selectedCategory: $selectedCategory)';
+    return 'PhotoState(categories: $categories, isLoading: $isLoading, selectedCategory: $selectedCategory, photo: $photo)';
   }
 
   @override
@@ -162,14 +199,17 @@ class _$PhotoStateImpl implements _PhotoState {
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.selectedCategory, selectedCategory) ||
-                other.selectedCategory == selectedCategory));
+                other.selectedCategory == selectedCategory) &&
+            (identical(other.photo, photo) || other.photo == photo));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, categories, isLoading, selectedCategory);
+      Object.hash(runtimeType, categories, isLoading, selectedCategory, photo);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PhotoState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PhotoStateImplCopyWith<_$PhotoStateImpl> get copyWith =>
@@ -180,7 +220,8 @@ abstract class _PhotoState implements PhotoState {
   const factory _PhotoState(
       {required final GenericState<List<HiveCategory>> categories,
       required final bool isLoading,
-      required final int? selectedCategory}) = _$PhotoStateImpl;
+      required final int? selectedCategory,
+      required final GenericState<HivePhoto> photo}) = _$PhotoStateImpl;
 
   @override
   GenericState<List<HiveCategory>> get categories;
@@ -189,7 +230,12 @@ abstract class _PhotoState implements PhotoState {
   @override
   int? get selectedCategory;
   @override
-  @JsonKey(ignore: true)
+  GenericState<HivePhoto> get photo;
+
+  /// Create a copy of PhotoState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PhotoStateImplCopyWith<_$PhotoStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

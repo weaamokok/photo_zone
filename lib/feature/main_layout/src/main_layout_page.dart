@@ -9,6 +9,7 @@ import 'package:photo_zone/feature/gallery_layout/src/add_image_sheet_composer.d
 import 'package:photo_zone/feature/home/src/home_composer.dart';
 import 'package:photo_zone/feature/main_layout/src/logic/cubit/main_layout_cubit.dart';
 import 'package:photo_zone/helpers/image_picker.dart';
+import 'package:photo_zone/ui/route.dart';
 
 class MainLayoutPage extends StatelessWidget {
   const MainLayoutPage({super.key});
@@ -49,13 +50,19 @@ class MainLayoutPage extends StatelessWidget {
           currentIndex: 0,
           onTap: (p0) async {
             if (p0 == 1) {
-              final image =
-                  await selectOrTakePhoto(ImageSource.camera).then((image) {
+              final image = await selectOrTakePhoto(ImageSource.camera)
+                  .then((image) async {
                 print(image);
 
                 if (image != null) {
-                  bloc.addPhoto(image: image);
-                   context.pushNamed('photo', extra: image.path);
+                  final key = await bloc.addPhoto(image: image);
+                  key.fold((l) {
+                    return;
+                  }, (r) {
+                    print('key in main layout $r');
+                    context.pushNamed('photo',
+                        extra: PhotoExtra(photoPath: image.path, photo: r));
+                  });
                 }
 
                 // showModalBottomSheet(

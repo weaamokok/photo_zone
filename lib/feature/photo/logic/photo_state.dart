@@ -6,5 +6,6 @@ class PhotoState with _$PhotoState {
     required GenericState<List<HiveCategory>> categories,
     required bool isLoading,
     required int? selectedCategory,
+    required GenericState<HivePhoto> photo,
   }) = _PhotoState;
 }

@@ -8,7 +8,7 @@ part of 'image_model.dart';
 
 _$PhotoImpl _$$PhotoImplFromJson(Map<String, dynamic> json) => _$PhotoImpl(
       photo: json['photo'] as String,
-      categoryId: json['categoryId'] as int?,
+      categoryId: (json['categoryId'] as num?)?.toInt(),
       createdAt: DateTime.parse(json['createdAt'] as String),
     );
 

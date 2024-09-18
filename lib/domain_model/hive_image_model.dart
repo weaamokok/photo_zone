@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive_flutter/adapters.dart';
 
 part 'hive_image_model.g.dart';
@@ -17,12 +18,12 @@ part 'hive_image_model.g.dart';
 //   factory HivePhoto.fromJson(Map<String, dynamic> json) =>
 //       _$HivePhotoFromJson(json);
 // }
-
 @HiveType(typeId: 1)
 class HivePhoto extends HiveObject {
   HivePhoto({
     required this.image,
     this.categoryId,
+    this.id,
     required this.createdAt,
   });
   @HiveField(0)
@@ -31,4 +32,20 @@ class HivePhoto extends HiveObject {
   int? categoryId;
   @HiveField(2)
   DateTime createdAt;
+  @HiveField(3)
+  dynamic id;
+
+  HivePhoto copyWith({
+    String? image,
+    dynamic id,
+    int? categoryId,
+    DateTime? createdAt,
+  }) {
+    return HivePhoto(
+      image: image ?? this.image,
+      id: id ?? super.key,
+      categoryId: categoryId ?? this.categoryId,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
 }

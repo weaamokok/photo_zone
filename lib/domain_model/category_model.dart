@@ -62,7 +62,7 @@ class CategoryModel {
     if (identical(this, other)) return true;
 
     return other is CategoryModel &&
-        other.id == id &&
+      other.id == id &&
         other.categoryName == categoryName &&
         other.folderColor == folderColor &&
         other.createdAt == createdAt;

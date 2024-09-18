@@ -26,8 +26,12 @@ mixin _$AddCategoryState {
   bool get isSuccess => throw _privateConstructorUsedError;
   bool get isFailure => throw _privateConstructorUsedError;
 
+  /// Serializes this AddCategoryState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AddCategoryState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AddCategoryStateCopyWith<AddCategoryState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -56,6 +60,8 @@ class _$AddCategoryStateCopyWithImpl<$Res, $Val extends AddCategoryState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AddCategoryState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -114,6 +120,8 @@ class __$$AddCategoryStateImplCopyWithImpl<$Res>
       $Res Function(_$AddCategoryStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AddCategoryState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -202,12 +210,14 @@ class _$AddCategoryStateImpl implements _AddCategoryState {
                 other.isFailure == isFailure));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, selectedColorIndex, isSubmitting,
       const DeepCollectionEquality().hash(_folders), isSuccess, isFailure);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AddCategoryState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AddCategoryStateImplCopyWith<_$AddCategoryStateImpl> get copyWith =>
@@ -243,8 +253,11 @@ abstract class _AddCategoryState implements AddCategoryState {
   bool get isSuccess;
   @override
   bool get isFailure;
+
+  /// Create a copy of AddCategoryState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AddCategoryStateImplCopyWith<_$AddCategoryStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -18,7 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$GalleryManagerState {
   GenericState<List<Photo>> get photos => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GalleryManagerState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $GalleryManagerStateCopyWith<GalleryManagerState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -44,6 +46,8 @@ class _$GalleryManagerStateCopyWithImpl<$Res, $Val extends GalleryManagerState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of GalleryManagerState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -57,6 +61,8 @@ class _$GalleryManagerStateCopyWithImpl<$Res, $Val extends GalleryManagerState>
     ) as $Val);
   }
 
+  /// Create a copy of GalleryManagerState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $GenericStateCopyWith<List<Photo>, $Res> get photos {
@@ -88,6 +94,8 @@ class __$$GalleryManagerStateImplCopyWithImpl<$Res>
       $Res Function(_$GalleryManagerStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GalleryManagerState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -126,7 +134,9 @@ class _$GalleryManagerStateImpl implements _GalleryManagerState {
   @override
   int get hashCode => Object.hash(runtimeType, photos);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GalleryManagerState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GalleryManagerStateImplCopyWith<_$GalleryManagerStateImpl> get copyWith =>
@@ -141,8 +151,11 @@ abstract class _GalleryManagerState implements GalleryManagerState {
 
   @override
   GenericState<List<Photo>> get photos;
+
+  /// Create a copy of GalleryManagerState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GalleryManagerStateImplCopyWith<_$GalleryManagerStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

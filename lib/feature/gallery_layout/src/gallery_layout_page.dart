@@ -1,23 +1,50 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:photo_zone/feature/gallery_layout/src/logic/cubit/gallery_manager_cubit.dart';
+import 'package:photo_zone/feature/home/src/home_page.dart';
 
 class GalleryLayoutPage extends StatelessWidget {
   const GalleryLayoutPage({super.key});
 
   @override
-  Widget build(BuildContext context) {  
-    
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(elevation: 0),//hdhdkz
+      appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new),
+          onPressed: () => context.pop(),
+        ),
+      ), //hdhdkz
       body: BlocBuilder<GalleryManagerCubit, GalleryManagerState>(
           builder: (context, state) {
         return state.photos.maybeMap(
           failedProcess: (value) => Text('error'),
-          emptyPage: (value) => Text('empty'),
+          emptyPage: (value) => const Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  EneftyIcons.folder_2_bold,
+                  color: Color(0xffE6A4B4),
+                  size: 100,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'No Photos in this folder yet 🌝',
+                  style: TextStyle(color: Color(0xff282828)),
+                )
+              ],
+            ),
+          ),
           orElse: () => SizedBox.shrink(),
           loading: (value) => const CircularProgressIndicator(),
           loaded: (value) => GridView.builder(

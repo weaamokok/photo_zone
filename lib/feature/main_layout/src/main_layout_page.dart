@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:photo_zone/feature/gallery_layout/src/add_image_sheet_composer.dart';
 import 'package:photo_zone/feature/home/src/home_composer.dart';
 import 'package:photo_zone/feature/main_layout/src/logic/cubit/main_layout_cubit.dart';
 import 'package:photo_zone/helpers/image_picker.dart';
@@ -50,7 +49,7 @@ class MainLayoutPage extends StatelessWidget {
           currentIndex: 0,
           onTap: (p0) async {
             if (p0 == 1) {
-              final image = await selectOrTakePhoto(ImageSource.camera)
+         await selectOrTakePhoto(ImageSource.camera)
                   .then((image) async {
                 print(image);
 

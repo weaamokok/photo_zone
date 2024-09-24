@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_zone/deps.dart';
-import 'package:photo_zone/feature/main_layout/src/main_layout_composer.dart';
 import 'package:photo_zone/firebase_options.dart';
 import 'package:photo_zone/local_storage/src/hive_init.dart';
 import 'package:photo_zone/ui/route.dart';

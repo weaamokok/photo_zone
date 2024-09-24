@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:photo_zone/feature/home/src/home_page.dart';
-
 import 'package:photo_zone/feature/photo/logic/photo_cubit.dart';
 import 'package:go_router/go_router.dart';
 

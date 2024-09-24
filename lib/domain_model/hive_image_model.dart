@@ -1,6 +1,4 @@
-import 'dart:io';
 
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive_flutter/adapters.dart';
 
 part 'hive_image_model.g.dart';

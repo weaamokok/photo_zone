@@ -64,9 +64,7 @@ class LocalStorage {
         return element.key == photoKey;
       });
 
-      if (photo == null) {
-        return Left('Photo not found');
-      }
+   
       return Right(photo);
     } catch (l) {
       print(' error in get photo ${l.toString()}');

@@ -1,16 +1,20 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 import 'package:photo_zone/feature/gallery_layout/src/logic/cubit/gallery_manager_cubit.dart';
-import 'package:photo_zone/feature/home/src/home_page.dart';
 
-class GalleryLayoutPage extends StatelessWidget {
+class GalleryLayoutPage extends StatefulWidget {
   const GalleryLayoutPage({super.key});
 
+  @override
+  State<GalleryLayoutPage> createState() => _GalleryLayoutPageState();
+}
+
+class _GalleryLayoutPageState extends State<GalleryLayoutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,15 +49,18 @@ class GalleryLayoutPage extends StatelessWidget {
               ],
             ),
           ),
-          orElse: () => SizedBox.shrink(),
+          orElse: () => const SizedBox.shrink(),
           loading: (value) => const CircularProgressIndicator(),
           loaded: (value) => GridView.builder(
-            itemCount: value.data.length,
+          itemCount: value.data.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 mainAxisSpacing: 2, crossAxisSpacing: 2, crossAxisCount: 2),
-            itemBuilder: (context, index) => Image.file(
-              File(value.data[index].photo),
-              fit: BoxFit.cover,
+            itemBuilder: (context, index) => InkWell(
+              onTap: () => context.pushNamed('viewPhoto', extra: value.data),
+              child: Image.file(
+                File(value.data[index].photo),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         );

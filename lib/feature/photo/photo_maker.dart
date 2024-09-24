@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photo_zone/deps.dart';
-import 'package:photo_zone/domain_model/hive_image_model.dart';
 import 'package:photo_zone/feature/photo/logic/photo_cubit.dart';
 import 'package:photo_zone/feature/photo/photo_page.dart';
 import 'package:photo_zone/local_storage/src/photo_local_database_repo.dart';

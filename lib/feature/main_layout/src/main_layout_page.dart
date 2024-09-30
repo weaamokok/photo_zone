@@ -26,7 +26,7 @@ class MainLayoutPage extends StatelessWidget {
       extendBody: true,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-            //   color: Colors.white,
+               color: Theme.of(context).bottomNavigationBarTheme.backgroundColor ,
             border: Border.all(
                 width: 1, color: Theme.of(context).canvasColor.onColor),
             borderRadius: BorderRadius.circular(

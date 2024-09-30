@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:photo_zone/domain_model/generic_state.dart';
+import 'package:photo_zone/domain_model/hive_category.dart';
 import 'package:photo_zone/domain_model/image_model.dart';
 import 'package:photo_zone/local_storage/src/photo_local_database_repo.dart';
 
@@ -9,7 +10,9 @@ part 'gallery_manager_cubit.freezed.dart';
 
 class GalleryManagerCubit extends Cubit<GalleryManagerState> {
   GalleryManagerCubit({required this.localRepo})
-      : super(GalleryManagerState(photos: const GenericState.initial()));
+      : super(GalleryManagerState(
+            photos: const GenericState.initial(),
+            viewedPhotoCategory: const GenericState.initial()));
   void fetchPhotos({int? categoryId}) async {
     //emit(state.copyWith(isSuccess: false));
     //remote
@@ -41,6 +44,23 @@ class GalleryManagerCubit extends Cubit<GalleryManagerState> {
                       createdAt: e.createdAt))
                   .toList())));
     });
+  }
+
+  void getPhotoCategory({required int categoryKey}) async {
+    emit(state.copyWith(viewedPhotoCategory: const GenericState.loading()));
+    final response = await localRepo.getCategory(categoryKey: categoryKey);
+    response.fold(
+      (l) => emit(state.copyWith(
+          viewedPhotoCategory: const GenericState.failedProcess())),
+      (data) {
+        if (data == null) {
+          emit(state.copyWith(
+              viewedPhotoCategory: const GenericState.emptyPage()));
+          return;
+        }
+        emit(state.copyWith(viewedPhotoCategory: GenericState.loaded(data)));
+      },
+    );
   }
 
   final LocalStorage localRepo;

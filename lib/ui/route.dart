@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:photo_zone/domain_model/image_model.dart';
 import 'package:photo_zone/feature/gallery_layout/src/galler_layout_composer.dart';
+import 'package:photo_zone/feature/gallery_layout/src/view_photo_composer.dart';
 import 'package:photo_zone/feature/gallery_layout/src/widget/view_photo.dart';
 import 'package:photo_zone/feature/main_layout/src/main_layout_composer.dart';
 import 'package:photo_zone/feature/photo/photo_maker.dart';
@@ -32,7 +33,7 @@ final router = GoRouter(
         name: 'viewPhoto',
         builder: (context, state) {
           final extras = state.extra as List<Photo>;
-          return ViewPhoto(
+          return ViewPhotoComposer.makePhoto(
             photos: extras,
           );
         }),

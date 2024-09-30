@@ -23,6 +23,18 @@ class LocalStorage {
     return const Right(unit);
   }
 
+  Future<Either<String, HiveCategory?>> getCategory(
+      {required int categoryKey}) async {
+    try {
+      final box = await _localStorage.categoryBox;
+      return right(box.get(categoryKey));
+    } catch (error) {
+      return Left(error.toString());
+    }
+
+  
+  }
+
   Future<Either<String, List<HiveCategory>?>> getCategories() async {
     try {
       final box = await _localStorage.categoryBox;
@@ -64,7 +76,6 @@ class LocalStorage {
         return element.key == photoKey;
       });
 
-   
       return Right(photo);
     } catch (l) {
       print(' error in get photo ${l.toString()}');

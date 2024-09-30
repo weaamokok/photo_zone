@@ -17,6 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$GalleryManagerState {
   GenericState<List<Photo>> get photos => throw _privateConstructorUsedError;
+  GenericState<HiveCategory> get viewedPhotoCategory =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of GalleryManagerState
   /// with the given fields replaced by the non-null parameter values.
@@ -31,9 +33,12 @@ abstract class $GalleryManagerStateCopyWith<$Res> {
           GalleryManagerState value, $Res Function(GalleryManagerState) then) =
       _$GalleryManagerStateCopyWithImpl<$Res, GalleryManagerState>;
   @useResult
-  $Res call({GenericState<List<Photo>> photos});
+  $Res call(
+      {GenericState<List<Photo>> photos,
+      GenericState<HiveCategory> viewedPhotoCategory});
 
   $GenericStateCopyWith<List<Photo>, $Res> get photos;
+  $GenericStateCopyWith<HiveCategory, $Res> get viewedPhotoCategory;
 }
 
 /// @nodoc
@@ -52,12 +57,17 @@ class _$GalleryManagerStateCopyWithImpl<$Res, $Val extends GalleryManagerState>
   @override
   $Res call({
     Object? photos = null,
+    Object? viewedPhotoCategory = null,
   }) {
     return _then(_value.copyWith(
       photos: null == photos
           ? _value.photos
           : photos // ignore: cast_nullable_to_non_nullable
               as GenericState<List<Photo>>,
+      viewedPhotoCategory: null == viewedPhotoCategory
+          ? _value.viewedPhotoCategory
+          : viewedPhotoCategory // ignore: cast_nullable_to_non_nullable
+              as GenericState<HiveCategory>,
     ) as $Val);
   }
 
@@ -70,6 +80,17 @@ class _$GalleryManagerStateCopyWithImpl<$Res, $Val extends GalleryManagerState>
       return _then(_value.copyWith(photos: value) as $Val);
     });
   }
+
+  /// Create a copy of GalleryManagerState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $GenericStateCopyWith<HiveCategory, $Res> get viewedPhotoCategory {
+    return $GenericStateCopyWith<HiveCategory, $Res>(_value.viewedPhotoCategory,
+        (value) {
+      return _then(_value.copyWith(viewedPhotoCategory: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -80,10 +101,14 @@ abstract class _$$GalleryManagerStateImplCopyWith<$Res>
       __$$GalleryManagerStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({GenericState<List<Photo>> photos});
+  $Res call(
+      {GenericState<List<Photo>> photos,
+      GenericState<HiveCategory> viewedPhotoCategory});
 
   @override
   $GenericStateCopyWith<List<Photo>, $Res> get photos;
+  @override
+  $GenericStateCopyWith<HiveCategory, $Res> get viewedPhotoCategory;
 }
 
 /// @nodoc
@@ -100,12 +125,17 @@ class __$$GalleryManagerStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? photos = null,
+    Object? viewedPhotoCategory = null,
   }) {
     return _then(_$GalleryManagerStateImpl(
       photos: null == photos
           ? _value.photos
           : photos // ignore: cast_nullable_to_non_nullable
               as GenericState<List<Photo>>,
+      viewedPhotoCategory: null == viewedPhotoCategory
+          ? _value.viewedPhotoCategory
+          : viewedPhotoCategory // ignore: cast_nullable_to_non_nullable
+              as GenericState<HiveCategory>,
     ));
   }
 }
@@ -113,14 +143,17 @@ class __$$GalleryManagerStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$GalleryManagerStateImpl implements _GalleryManagerState {
-  _$GalleryManagerStateImpl({required this.photos});
+  _$GalleryManagerStateImpl(
+      {required this.photos, required this.viewedPhotoCategory});
 
   @override
   final GenericState<List<Photo>> photos;
+  @override
+  final GenericState<HiveCategory> viewedPhotoCategory;
 
   @override
   String toString() {
-    return 'GalleryManagerState(photos: $photos)';
+    return 'GalleryManagerState(photos: $photos, viewedPhotoCategory: $viewedPhotoCategory)';
   }
 
   @override
@@ -128,11 +161,13 @@ class _$GalleryManagerStateImpl implements _GalleryManagerState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GalleryManagerStateImpl &&
-            (identical(other.photos, photos) || other.photos == photos));
+            (identical(other.photos, photos) || other.photos == photos) &&
+            (identical(other.viewedPhotoCategory, viewedPhotoCategory) ||
+                other.viewedPhotoCategory == viewedPhotoCategory));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, photos);
+  int get hashCode => Object.hash(runtimeType, photos, viewedPhotoCategory);
 
   /// Create a copy of GalleryManagerState
   /// with the given fields replaced by the non-null parameter values.
@@ -146,11 +181,14 @@ class _$GalleryManagerStateImpl implements _GalleryManagerState {
 
 abstract class _GalleryManagerState implements GalleryManagerState {
   factory _GalleryManagerState(
-          {required final GenericState<List<Photo>> photos}) =
+          {required final GenericState<List<Photo>> photos,
+          required final GenericState<HiveCategory> viewedPhotoCategory}) =
       _$GalleryManagerStateImpl;
 
   @override
   GenericState<List<Photo>> get photos;
+  @override
+  GenericState<HiveCategory> get viewedPhotoCategory;
 
   /// Create a copy of GalleryManagerState
   /// with the given fields replaced by the non-null parameter values.

@@ -47,6 +47,12 @@ class AddCategoryBottomSheet extends StatelessWidget {
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 35),
                         hintStyle: const TextStyle(fontSize: 16),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.blue),
+                            borderRadius: BorderRadius.circular(25)),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(),
+                            borderRadius: BorderRadius.circular(25)),
                         border: OutlineInputBorder(
                             borderSide: const BorderSide(),
                             borderRadius: BorderRadius.circular(25)))),

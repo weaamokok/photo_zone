@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
 // use a lower package version, some properties may not be supported.
 // In that case remove them after copying this theme to your app.
       theme: FlexThemeData.light(
-        fontFamily: 'Cairo',
+        bottomAppBarElevation: 0, fontFamily: 'Cairo',
         colors: const FlexSchemeColor(
           primary: Color(0xff1145a4),
           primaryContainer: Color(0xffacc7f6),
@@ -42,6 +42,11 @@ class MyApp extends StatelessWidget {
         surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
         blendLevel: 7,
         subThemesData: const FlexSubThemesData(
+          inputDecoratorBorderType: FlexInputBorderType.outline,
+          inputDecoratorBorderWidth: 1,defaultRadius:25 ,
+          inputDecoratorRadius: 25,
+          outlinedButtonRadius: 25,
+          bottomSheetRadius: 0,
           blendOnLevel: 10,
           blendOnColors: false,
           useTextTheme: true,

@@ -4,6 +4,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:photo_zone/common/widgets/cirular_icon.dart';
 import 'package:photo_zone/feature/gallery_layout/src/galler_layout_composer.dart';
 import 'package:photo_zone/feature/home/src/cubit/add_category_cubit.dart';
 import 'package:photo_zone/feature/home/src/widget/add_category_bottomsheet.dart';
@@ -37,30 +38,20 @@ class HomePage extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle, border: Border.all()),
-                        width: 45,
-                        height: 45,
-                        padding: const EdgeInsets.only(bottom: 5),
-                        child: CircleAvatar(
-                          radius: 25,
-                          child: IconButton(
-                            icon: const Icon(
-                              EneftyIcons.add_outline,
-                            ),
-                            onPressed: () {
-                              showModalBottomSheet(
-                                context: context,
-                                builder: (_) =>
-                                    BlocProvider<AddCategoryCubit>.value(
-                                  value: context.read<AddCategoryCubit>(),
-                                  child: const AddCategoryBottomSheet(),
-                                ),
-                              );
-                            },
-                          ),
+                      CircularIcon(
+                        icon: const Icon(
+                          EneftyIcons.add_outline,
                         ),
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (_) =>
+                                BlocProvider<AddCategoryCubit>.value(
+                              value: context.read<AddCategoryCubit>(),
+                              child: const AddCategoryBottomSheet(),
+                            ),
+                          );
+                        },
                       ),
                       Container(
                         decoration: BoxDecoration(

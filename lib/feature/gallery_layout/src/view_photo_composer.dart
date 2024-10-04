@@ -8,11 +8,11 @@ import 'package:photo_zone/feature/gallery_layout/src/widget/view_photo.dart';
 import 'package:photo_zone/local_storage/src/photo_local_database_repo.dart';
 
 class ViewPhotoComposer {
-  static Widget makePhoto({required List<Photo> photos}) {
+  static Widget makePhoto({required List<Photo> photos,required int photoIndex}) {
     return BlocProvider<GalleryManagerCubit>(
       create: (context) =>
           GalleryManagerCubit(localRepo: locator<LocalStorage>()),
-      child: ViewPhoto(
+      child: ViewPhoto(photoIndex: photoIndex,
         photos: photos,
       ),
     );

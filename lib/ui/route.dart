@@ -29,12 +29,13 @@ final router = GoRouter(
       },
     ),
     GoRoute(
-        path: '/viewPhoto',
+        path: '/viewPhoto/:photoIndex',
         name: 'viewPhoto',
         builder: (context, state) {
           final extras = state.extra as List<Photo>;
           return ViewPhotoComposer.makePhoto(
             photos: extras,
+            photoIndex: int.parse(state.pathParameters['photoIndex']!),
           );
         }),
   ],

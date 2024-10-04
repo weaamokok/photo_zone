@@ -56,7 +56,7 @@ class _GalleryLayoutPageState extends State<GalleryLayoutPage> {
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 mainAxisSpacing: 2, crossAxisSpacing: 2, crossAxisCount: 2),
             itemBuilder: (context, index) => InkWell(
-              onTap: () => context.pushNamed('viewPhoto', extra: value.data),
+              onTap: () => context.pushNamed('viewPhoto', extra: value.data,pathParameters: {'photoIndex': index.toString()}),
               child: Image.file(
                 File(value.data[index].photo),
                 fit: BoxFit.cover,

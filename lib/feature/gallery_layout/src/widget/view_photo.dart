@@ -5,13 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
+import 'package:photo_zone/common/widgets/cirular_icon.dart';
 import 'package:photo_zone/domain_model/image_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photo_zone/feature/gallery_layout/src/logic/cubit/gallery_manager_cubit.dart';
 
 class ViewPhoto extends StatefulWidget {
-  const ViewPhoto({super.key, required this.photos});
+  const ViewPhoto({super.key, required this.photos, required this.photoIndex});
   final List<Photo> photos;
+  final int photoIndex;
   @override
   State<ViewPhoto> createState() => _ViewPhotoState();
 }
@@ -22,40 +24,101 @@ class _ViewPhotoState extends State<ViewPhoto>
   int index = 0;
   String? photoTag;
   PhotoViewController controller = PhotoViewController();
+  PhotoViewScaleStateController scaleStateController =
+      PhotoViewScaleStateController();
   @override
   void initState() {
     super.initState();
+    context.read<GalleryManagerCubit>().getPhotoCategory(
+        categoryKey: widget.photos[widget.photoIndex].categoryId!);
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GalleryManagerCubit, GalleryManagerState>(
+    return BlocConsumer<GalleryManagerCubit, GalleryManagerState>(
+      listener: (context, state) {
+        if (state.photoDeleted) {
+          context.read<GalleryManagerCubit>().fetchPhotos(
+              categoryId: widget.photos[widget.photoIndex].categoryId);
+          context.pop();
+        }
+      },
       builder: (context, state) {
         return Scaffold(
+          extendBodyBehindAppBar: true,
           extendBody: true,
           bottomSheet: showFrame
               ? Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsetsDirectional.only(
+                      top: 10, start: 20, end: 20),
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(0)),
-                  child: Column(
+                  child: Row(
                     mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       state.viewedPhotoCategory.maybeMap(
                         orElse: () => const SizedBox.shrink(),
                         loaded: (value) => Container(
+                          padding: const EdgeInsetsDirectional.only(
+                            end: 20,
+                          ),
                           decoration: BoxDecoration(
-                              color: Colors.grey.shade100,
-                              borderRadius: BorderRadius.circular(10)),
+                              color: Color(value.data.folderColor),
+                              borderRadius: BorderRadius.circular(25)),
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
                             children: [
                               IconButton(
                                   onPressed: () {},
-                                  icon: const Icon(EneftyIcons.tag_2_outline)),
+                                  icon: const Icon(
+                                    EneftyIcons.tag_2_outline,
+                                    size: 25,
+                                  )),
                               Text(value.data.categoryName ?? ''),
                             ],
                           ),
                         ),
                       ),
+                      CircularIcon(
+                        icon: const Icon(EneftyIcons.trash_outline),
+                        color: Colors.redAccent,
+                        onTap: () {
+                          showAdaptiveDialog(
+                            context: context,
+                            builder: (_) {
+                              return BlocProvider.value(
+                                value: context.read<GalleryManagerCubit>(),
+                                child: AlertDialog(
+                                  title: Text(
+                                      'delete photo'), // To display the title it is optional
+                                  content: Text(
+                                      'this action will permently remove this photo'), // Message which will be pop up on the screen
+                                  // Action widget which will provide the user to acknowledge the choice
+                                  actions: [
+                                    Text('cancel'),
+                                    InkWell(
+                                      onTap: () {
+                                        context
+                                            .read<GalleryManagerCubit>()
+                                            .deletePhoto(
+                                                photoIndex: widget.photoIndex);
+                                      },
+                                      child: Text(
+                                        'delete',
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      )
                     ],
                   ),
                 )
@@ -63,6 +126,7 @@ class _ViewPhotoState extends State<ViewPhoto>
           body: Stack(
             children: [
               PhotoViewGallery(
+                pageController: PageController(initialPage: widget.photoIndex),
                 customSize: MediaQuery.sizeOf(context),
                 gaplessPlayback: true,
                 onPageChanged: (index) =>
@@ -74,9 +138,10 @@ class _ViewPhotoState extends State<ViewPhoto>
                   ...widget.photos
                       .map((image) => PhotoViewGalleryPageOptions.customChild(
                           controller: controller,
+                          scaleStateController: scaleStateController,
+                          minScale: PhotoViewComputedScale.contained,
                           child: InkWell(
                             onTap: () {
-                              print('photo pressed $showFrame');
                               setState(() {
                                 showFrame = !showFrame;
                               });

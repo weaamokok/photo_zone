@@ -11,6 +11,7 @@ part 'gallery_manager_cubit.freezed.dart';
 class GalleryManagerCubit extends Cubit<GalleryManagerState> {
   GalleryManagerCubit({required this.localRepo})
       : super(GalleryManagerState(
+            photoDeleted: false,
             photos: const GenericState.initial(),
             viewedPhotoCategory: const GenericState.initial()));
   void fetchPhotos({int? categoryId}) async {
@@ -44,6 +45,18 @@ class GalleryManagerCubit extends Cubit<GalleryManagerState> {
                       createdAt: e.createdAt))
                   .toList())));
     });
+  }
+
+  void deletePhoto({required int photoIndex}) async {
+    emit(state.copyWith(photos: const GenericState.loading()));
+    final response = await localRepo.deletePhoto(photoKey: photoIndex);
+    response.fold(
+      (l) => emit(state.copyWith(photos: const GenericState.failedProcess())),
+      (r) {
+        print('deleted');
+        emit(state.copyWith(photoDeleted: true));
+      },
+    );
   }
 
   void getPhotoCategory({required int categoryKey}) async {

@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:hive/hive.dart';
 
 import 'package:photo_zone/domain_model/hive_category.dart';
 import 'package:photo_zone/domain_model/hive_image_model.dart';
@@ -31,8 +32,6 @@ class LocalStorage {
     } catch (error) {
       return Left(error.toString());
     }
-
-  
   }
 
   Future<Either<String, List<HiveCategory>?>> getCategories() async {
@@ -113,4 +112,25 @@ class LocalStorage {
       return Left(error.toString());
     }
   }
+
+  Future<Either<String, Unit>> deletePhoto({required int photoKey}) async {
+    try {
+      final box = await _localStorage.photosBox;
+print('photo key $photoKey');
+      await box.deleteAt(photoKey);
+      return const Right(unit);
+    } catch (e) {
+      print('error in deleting photo ${e.toString()}');
+      return Left(e.toString());
+    }
+  }
+}
+
+int getIndexOfPhoto({
+  required int photoKey,
+  required Box<HivePhoto> box,
+}) {
+  return box.values.toList().indexWhere((element) {
+    return element.key == photoKey;
+  });
 }

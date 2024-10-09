@@ -4,7 +4,6 @@ import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:photo_view/photo_view_gallery.dart';
 import 'package:photo_zone/feature/gallery_layout/src/logic/cubit/gallery_manager_cubit.dart';
 
 class GalleryLayoutPage extends StatefulWidget {
@@ -52,13 +51,22 @@ class _GalleryLayoutPageState extends State<GalleryLayoutPage> {
           orElse: () => const SizedBox.shrink(),
           loading: (value) => const CircularProgressIndicator(),
           loaded: (value) => GridView.builder(
-          itemCount: value.data.length,
+            itemCount: value.data.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 mainAxisSpacing: 2, crossAxisSpacing: 2, crossAxisCount: 2),
             itemBuilder: (context, index) => InkWell(
-              onTap: () => context.pushNamed('viewPhoto', extra: value.data,pathParameters: {'photoIndex': index.toString()}),
+              onTap: () async {
+                final result = await context.pushNamed('viewPhoto',
+                    extra: value.data,
+                    pathParameters: {'photoIndex': index.toString()});
+                if (result == true) {
+                  context
+                      .read<GalleryManagerCubit>()
+                      .fetchPhotos(categoryId: value.data[index].categoryId);
+                }
+              },
               child: Image.file(
-                File(value.data[index].photo),
+                File(value.data[index].image),
                 fit: BoxFit.cover,
               ),
             ),

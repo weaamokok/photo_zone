@@ -6,13 +6,13 @@ import 'package:go_router/go_router.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:photo_zone/common/widgets/cirular_icon.dart';
-import 'package:photo_zone/domain_model/image_model.dart';
+import 'package:photo_zone/domain_model/hive_image_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photo_zone/feature/gallery_layout/src/logic/cubit/gallery_manager_cubit.dart';
 
 class ViewPhoto extends StatefulWidget {
   const ViewPhoto({super.key, required this.photos, required this.photoIndex});
-  final List<Photo> photos;
+  final List<HivePhoto> photos;
   final int photoIndex;
   @override
   State<ViewPhoto> createState() => _ViewPhotoState();
@@ -38,9 +38,7 @@ class _ViewPhotoState extends State<ViewPhoto>
     return BlocConsumer<GalleryManagerCubit, GalleryManagerState>(
       listener: (context, state) {
         if (state.photoDeleted) {
-          context.read<GalleryManagerCubit>().fetchPhotos(
-              categoryId: widget.photos[widget.photoIndex].categoryId);
-          context.pop();
+          context.pop(true);
         }
       },
       builder: (context, state) {
@@ -93,25 +91,27 @@ class _ViewPhotoState extends State<ViewPhoto>
                               return BlocProvider.value(
                                 value: context.read<GalleryManagerCubit>(),
                                 child: AlertDialog(
-                                  title: Text(
+                                  title: const Text(
                                       'delete photo'), // To display the title it is optional
-                                  content: Text(
+                                  content: const Text(
                                       'this action will permently remove this photo'), // Message which will be pop up on the screen
                                   // Action widget which will provide the user to acknowledge the choice
                                   actions: [
-                                    Text('cancel'),
-                                    InkWell(
-                                      onTap: () {
-                                        context
-                                            .read<GalleryManagerCubit>()
-                                            .deletePhoto(
-                                                photoIndex: widget.photoIndex);
-                                      },
-                                      child: Text(
-                                        'delete',
-                                        style: TextStyle(fontSize: 14),
-                                      ),
-                                    ),
+                                    const Text('cancel'),
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          context
+                                              .read<GalleryManagerCubit>()
+                                              .deletePhoto(
+                                                  photoIndex: widget
+                                                      .photos[widget.photoIndex]
+                                                      .key);
+                                          context.pop();
+                                        },
+                                        child: const Text(
+                                          'delete',
+                                          style: TextStyle(fontSize: 14),
+                                        )),
                                   ],
                                 ),
                               );
@@ -147,7 +147,7 @@ class _ViewPhotoState extends State<ViewPhoto>
                               });
                             },
                             child: Image.file(
-                              File(image.photo),
+                              File(image.image),
                               fit: BoxFit.cover,
                             ),
                           ))),

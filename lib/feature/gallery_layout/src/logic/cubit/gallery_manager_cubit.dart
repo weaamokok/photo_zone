@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:photo_zone/domain_model/generic_state.dart';
 import 'package:photo_zone/domain_model/hive_category.dart';
+import 'package:photo_zone/domain_model/hive_image_model.dart';
 import 'package:photo_zone/domain_model/image_model.dart';
 import 'package:photo_zone/local_storage/src/photo_local_database_repo.dart';
 
@@ -36,14 +37,13 @@ class GalleryManagerCubit extends Cubit<GalleryManagerState> {
           //         folderColor: e.get('folder_color'),
           //         createdAt: e.get('created_at').toString()))
           //     .toList()
-          photos: GenericState.loaded(r == null
-              ? []
-              : r
-                  .map((e) => Photo(
-                      photo: e.image,
-                      categoryId: e.categoryId,
-                      createdAt: e.createdAt))
-                  .toList())));
+          photos: GenericState.loaded(r ?? []
+              // .map((e) => Photo(
+              //     photo: e.image,
+              //     categoryId: e.categoryId,
+              //     createdAt: e.createdAt))
+              // .toList()
+              )));
     });
   }
 

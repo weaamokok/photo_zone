@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:photo_zone/common/widgets/cirular_icon.dart';
+import 'package:photo_zone/feature/gallery_layout/src/galler_layout_composer.dart';
 import 'package:photo_zone/feature/home/src/home_composer.dart';
 import 'package:photo_zone/feature/main_layout/src/logic/cubit/main_layout_cubit.dart';
 import 'package:photo_zone/helpers/image_picker.dart';
@@ -23,10 +25,38 @@ class MainLayoutPage extends StatelessWidget {
           return pages.elementAt(state.index);
         },
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: Padding(
+        padding: const EdgeInsetsDirectional.only(end: 8.0),
+        child: CircularIcon(
+          size: 50,
+            icon: Icon(EneftyIcons.camera_outline),
+            onTap: () async {
+              await selectOrTakePhoto(ImageSource.camera).then((image) async {
+                print(image);
+        
+                if (image != null) {
+                  final key = await bloc.addPhoto(image: image);
+                  key.fold((l) {
+                    return;
+                  }, (r) {
+                    print('key in main layout $r');
+                    context.pushNamed('photo',
+                        extra: PhotoExtra(photoPath: image.path, photo: r));
+                  });
+                }
+        
+                // showModalBottomSheet(
+                //   context: context,
+                //   builder: (_) => AddImageComposer.makeAddImageSheet(),
+                // );
+              });
+            }),
+      ),
       extendBody: true,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-               color: Theme.of(context).bottomNavigationBarTheme.backgroundColor ,
+            color: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
             border: Border.all(
                 width: 1, color: Theme.of(context).canvasColor.onColor),
             borderRadius: BorderRadius.circular(
@@ -49,26 +79,26 @@ class MainLayoutPage extends StatelessWidget {
           currentIndex: 0,
           onTap: (p0) async {
             if (p0 == 1) {
-         await selectOrTakePhoto(ImageSource.camera)
-                  .then((image) async {
-                print(image);
+              //  await selectOrTakePhoto(ImageSource.camera)
+              //           .then((image) async {
+              //         print(image);
 
-                if (image != null) {
-                  final key = await bloc.addPhoto(image: image);
-                  key.fold((l) {
-                    return;
-                  }, (r) {
-                    print('key in main layout $r');
-                    context.pushNamed('photo',
-                        extra: PhotoExtra(photoPath: image.path, photo: r));
-                  });
-                }
+              //         if (image != null) {
+              //           final key = await bloc.addPhoto(image: image);
+              //           key.fold((l) {
+              //             return;
+              //           }, (r) {
+              //             print('key in main layout $r');
+              //             context.pushNamed('photo',
+              //                 extra: PhotoExtra(photoPath: image.path, photo: r));
+              //           });
+              //         }
 
-                // showModalBottomSheet(
-                //   context: context,
-                //   builder: (_) => AddImageComposer.makeAddImageSheet(),
-                // );
-              });
+              //         // showModalBottomSheet(
+              //         //   context: context,
+              //         //   builder: (_) => AddImageComposer.makeAddImageSheet(),
+              //         // );
+              //       });
             }
             bloc.changeIndex(p0);
           },
@@ -83,9 +113,7 @@ class MainLayoutPage extends StatelessWidget {
 
 final List<Widget> pages = [
   HomeComposer.makeHomePage(),
-  const Center(
-    child: Text('Camera'),
-  ),
+  GalleryComposer.makeGallery(),
   const Center(
     child: Text('Profile'),
   ),
@@ -97,7 +125,7 @@ List<DotNavigationBarItem> _items = [
     // selectedColor: Colors.black,
   ),
   DotNavigationBarItem(
-    icon: const Icon(EneftyIcons.camera_outline),
+    icon: const Icon(EneftyIcons.gallery_outline),
     // selectedColor: Colors.black,
   ),
   DotNavigationBarItem(

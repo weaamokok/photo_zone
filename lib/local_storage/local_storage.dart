@@ -2,6 +2,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:photo_zone/domain_model/hive_category.dart';
 import 'package:photo_zone/domain_model/hive_image_model.dart';
+import 'package:photo_zone/domain_model/user_model.dart';
 
 class LocalStorageSetup {
   LocalStorageSetup(HiveInterface hive) : _hive = hive {
@@ -25,9 +26,13 @@ class LocalStorageSetup {
   Future<Box<HivePhoto>> get photosBox => _openHiveBox<HivePhoto>(
         _BoxName.photoBox,
       );
+  Future<Box<UserHive>> get userBox => _openHiveBox<UserHive>(
+        _BoxName.userBox,
+      );
 }
 
 abstract class _BoxName {
   static const String photoBox = "photos";
+  static const String userBox = "user";
   static const String categoryBox = "categories";
 }

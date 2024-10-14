@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 
 import 'package:photo_zone/domain_model/hive_category.dart';
 import 'package:photo_zone/domain_model/hive_image_model.dart';
+import 'package:photo_zone/domain_model/user_model.dart';
 import 'package:photo_zone/local_storage/local_storage.dart';
 
 class LocalStorage {
@@ -124,6 +125,25 @@ class LocalStorage {
       return const Right(unit);
     } catch (e) {
       print('error in deleting photo ${e.toString()}');
+      return Left(e.toString());
+    }
+  }
+
+  Future<Either<String, int>> addUser({required UserHive userHive}) async {
+    try {
+      final box = await _localStorage.userBox;
+      final userId = await box.add(userHive);
+      return Right(userId);
+    } catch (error) {
+      return Left(error.toString());
+    }
+  }
+
+  Future<Either<String, UserHive?>> fetchUserInfo({required int userId}) async {
+    try {
+      final box = await _localStorage.userBox;
+      return Right(box.get(userId));
+    } catch (e) {
       return Left(e.toString());
     }
   }

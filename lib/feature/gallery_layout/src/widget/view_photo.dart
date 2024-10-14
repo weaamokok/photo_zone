@@ -99,6 +99,18 @@ class _ViewPhotoState extends State<ViewPhoto>
                                   actions: [
                                     const Text('cancel'),
                                     ElevatedButton(
+                                        style: const ButtonStyle(
+                                            shape: WidgetStatePropertyAll(
+                                                RoundedRectangleBorder(
+                                                    side: BorderSide(
+                                                        style:
+                                                            BorderStyle.solid,
+                                                        color:
+                                                            Color(0xffcb6060)),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10))))),
                                         onPressed: () {
                                           context
                                               .read<GalleryManagerCubit>()

@@ -44,6 +44,8 @@ class MyApp extends StatelessWidget {
         blendLevel: 7,
         subThemesData: const FlexSubThemesData(
           inputDecoratorBorderType: FlexInputBorderType.outline,
+          inputDecoratorFillColor: Colors.white,
+          inputDecoratorBorderSchemeColor: SchemeColor.secondary,
           inputDecoratorBorderWidth: 1,
           defaultRadius: 25,
           inputDecoratorRadius: 25,

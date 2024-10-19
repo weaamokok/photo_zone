@@ -39,12 +39,28 @@ class ProfilePage extends StatelessWidget {
                           builder: (_) => BlocProvider<ProfileCubit>.value(
                             value: context.read<ProfileCubit>(),
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
                               child: Column(
                                 children: [
-                                  TextFormField(),
-                                  TextFormField(),
-                                  TextFormField(),
+                                  const SizedBox(
+                                    height: 50,
+                                  ),
+                                  TextFormField(
+                                    decoration: textFieldStyle,
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  TextFormField(
+                                    decoration: textFieldStyle,
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  TextFormField(
+                                    decoration: textFieldStyle,
+                                  ),
                                 ],
                               ),
                             ),
@@ -135,3 +151,8 @@ class ProfilePage extends StatelessWidget {
     );
   }
 }
+
+InputDecoration textFieldStyle = const InputDecoration(
+    enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderSide: BorderSide(color: Color(0xff282828))));

@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:photo_zone/common/widgets/cirular_icon.dart';
 import 'package:photo_zone/feature/gallery_layout/src/logic/cubit/gallery_manager_cubit.dart';
 import 'package:photo_zone/feature/profile_layout/logic/cubit/profile_cubit.dart';
 import 'package:photo_zone/feature/profile_layout/logic/cubit/profile_state.dart';
@@ -24,7 +26,33 @@ class ProfilePage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
+                Padding(
+                    padding: const EdgeInsetsDirectional.only(top: 40, end: 20),
+                    child: Align(
+                      alignment: AlignmentDirectional.topEnd,
+                      child: CircularIcon(
+                        icon: const Icon(
+                          EneftyIcons.edit_outline,
+                        ),
+                        onTap: () => showModalBottomSheet(
+                          context: context,
+                          builder: (_) => BlocProvider<ProfileCubit>.value(
+                            value: context.read<ProfileCubit>(),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: Column(
+                                children: [
+                                  TextFormField(),
+                                  TextFormField(),
+                                  TextFormField(),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )),
+                const SizedBox(
                   height: 50,
                 ),
                 Container(

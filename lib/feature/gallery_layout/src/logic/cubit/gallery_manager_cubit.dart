@@ -3,7 +3,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:photo_zone/domain_model/generic_state.dart';
 import 'package:photo_zone/domain_model/hive_category.dart';
 import 'package:photo_zone/domain_model/hive_image_model.dart';
-import 'package:photo_zone/domain_model/image_model.dart';
 import 'package:photo_zone/local_storage/src/photo_local_database_repo.dart';
 
 part 'gallery_manager_state.dart';
@@ -16,6 +15,7 @@ class GalleryManagerCubit extends Cubit<GalleryManagerState> {
             photos: const GenericState.initial(),
             viewedPhotoCategory: const GenericState.initial()));
   void fetchPhotos({int? categoryId}) async {
+    if (categoryId != null) getPhotoCategory(categoryKey: categoryId);
     //emit(state.copyWith(isSuccess: false));
     //remote
     // final response = await api.fetchFolders();

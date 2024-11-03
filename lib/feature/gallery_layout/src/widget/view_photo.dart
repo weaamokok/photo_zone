@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
+import 'package:photo_zone/common/widgets/category_tag.dart';
 import 'package:photo_zone/common/widgets/cirular_icon.dart';
 import 'package:photo_zone/domain_model/hive_image_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,28 +59,7 @@ class _ViewPhotoState extends State<ViewPhoto>
                     children: [
                       state.viewedPhotoCategory.maybeMap(
                         orElse: () => const SizedBox.shrink(),
-                        loaded: (value) => Container(
-                          padding: const EdgeInsetsDirectional.only(
-                            end: 20,
-                          ),
-                          decoration: BoxDecoration(
-                              color: Color(value.data.folderColor),
-                              borderRadius: BorderRadius.circular(25)),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    EneftyIcons.tag_2_outline,
-                                    size: 25,
-                                  )),
-                              Text(value.data.categoryName ?? ''),
-                            ],
-                          ),
-                        ),
+                        loaded: (value) => CategoryTag(category: value.data),
                       ),
                       CircularIcon(
                         icon: const Icon(EneftyIcons.trash_outline),

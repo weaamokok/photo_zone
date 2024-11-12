@@ -67,6 +67,24 @@ class LocalStorage {
     }
   }
 
+  Future<Either<String, UserHive>> updateUserInfo(
+      {required UserHive user}) async {
+    try {
+      final box = await _localStorage.userBox;
+      final index = box.values.toList().indexWhere((element) {
+        return element.key == user.id;
+      });
+      if (index != -1) {
+        await box.putAt(index, user);
+        return Right(user);
+      } else {
+        return const Left('user not found');
+      }
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
   Future<Either<String, List<HivePhoto>?>> searchCategory({
     required String searchQuery,
   }) async {
@@ -153,8 +171,10 @@ class LocalStorage {
     try {
       final box = await _localStorage.userBox;
       final userId = await box.add(userHive);
+      print('user id $userId');
       return Right(userId);
     } catch (error) {
+      print(" error in adding ${error.toString()}");
       return Left(error.toString());
     }
   }

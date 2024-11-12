@@ -9,7 +9,8 @@ class LocalStorageSetup {
     try {
       _hive
         ..registerAdapter(HiveCategoryAdapter())
-        ..registerAdapter(HivePhotoAdapter());
+        ..registerAdapter(HivePhotoAdapter())
+        ..registerAdapter(UserHiveAdapter());
     } catch (_) {}
   }
 

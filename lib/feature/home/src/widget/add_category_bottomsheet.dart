@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:photo_zone/common/widgets/zone_button.dart';
 import 'package:photo_zone/feature/home/src/cubit/add_category_cubit.dart';
 import 'package:photo_zone/feature/home/src/cubit/add_category_state.dart';
 import 'package:photo_zone/feature/home/src/home_page.dart';
+import 'package:photo_zone/utils/theme.dart';
 
 class AddCategoryBottomSheet extends StatelessWidget {
   const AddCategoryBottomSheet({super.key});
@@ -87,31 +89,13 @@ class AddCategoryBottomSheet extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              Container(
-                width: double.infinity,
-                height: 50,
-                padding:
-                    const EdgeInsets.only(bottom: 5, top: 1, left: 1, right: 1),
-                margin: const EdgeInsets.symmetric(horizontal: 50),
-                decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(25)),
-                child: InkWell(
-                    onTap: () {
-                      bloc.addCategory();
-                    },
-                    child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25)),
-                        width: double.infinity,
-                        height: 50,
-                        child: state.isSubmitting
-                            ? const SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator.adaptive())
-                            : const Center(child: Text('add')))),
-              )
+              ZoneButton(
+                onTap: () {
+                  bloc.addCategory();
+                },
+                isLoading: state.isSubmitting,
+                child: const Text('Add'),
+              ),
             ],
           );
         },

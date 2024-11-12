@@ -10,15 +10,10 @@ class ProfileCubit extends Cubit<ProfileState> {
       : super(const ProfileState(user: GenericState.initial()));
   final LocalStorage localStorage;
 
-  void registertUser() async {
+  void registertUser({required UserHive user}) async {
+    print('registering user');
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    final user = UserHive(
-        image: '',
-        email: '',
-        createdAt: DateTime.now(),
-        name: '',
-        userName: '');
     final response = await localStorage.addUser(userHive: user);
     response.fold(
       (l) {
@@ -50,6 +45,15 @@ class ProfileCubit extends Cubit<ProfileState> {
         }
         emit(state.copyWith(user: GenericState.loaded(r)));
       },
+    );
+  }
+
+  updateUserInfo({required UserHive user}) async {
+    emit(state.copyWith(user: const GenericState.loading()));
+    final response = await localStorage.updateUserInfo(user: user);
+    response.fold(
+      (l) => emit(state.copyWith(user: const GenericState.failedProcess())),
+      (r) => emit(state.copyWith(user: GenericState.loaded(r))),
     );
   }
 }

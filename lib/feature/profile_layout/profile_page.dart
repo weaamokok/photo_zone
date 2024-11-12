@@ -4,9 +4,12 @@ import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photo_zone/common/widgets/cirular_icon.dart';
+import 'package:photo_zone/common/widgets/zone_button.dart';
+import 'package:photo_zone/domain_model/user_model.dart';
 import 'package:photo_zone/feature/gallery_layout/src/logic/cubit/gallery_manager_cubit.dart';
 import 'package:photo_zone/feature/profile_layout/logic/cubit/profile_cubit.dart';
 import 'package:photo_zone/feature/profile_layout/logic/cubit/profile_state.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -14,6 +17,42 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          Padding(
+              padding: const EdgeInsetsDirectional.only(top: 10, end: 20),
+              child: Align(
+                alignment: AlignmentDirectional.topEnd,
+                child: CircularIcon(
+                  icon: const Icon(
+                    EneftyIcons.edit_outline,
+                  ),
+                  onTap: () => showModalBottomSheet(
+                    showDragHandle: true,
+                    context: context,
+                    scrollControlDisabledMaxHeightRatio: 0.7,
+                    builder: (_) => BlocProvider<ProfileCubit>.value(
+                      value: context.read<ProfileCubit>()..fetchUserInfo(),
+                      child: BlocBuilder<ProfileCubit, ProfileState>(
+                        builder: (context, state) {
+                          return state.user.maybeMap(
+                            emptyPage: (value) => const EditProfile(),
+                            orElse: () => const SizedBox.shrink(),
+                            loaded: (value) => EditProfile(
+                              user: value.data,
+                            ),
+                            loading: (value) => const Skeletonizer(
+                              child: EditProfile(),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              )),
+        ],
+      ),
       body: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) {
           final user = state.user
@@ -26,48 +65,6 @@ class ProfilePage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                    padding: const EdgeInsetsDirectional.only(top: 40, end: 20),
-                    child: Align(
-                      alignment: AlignmentDirectional.topEnd,
-                      child: CircularIcon(
-                        icon: const Icon(
-                          EneftyIcons.edit_outline,
-                        ),
-                        onTap: () => showModalBottomSheet(
-                          context: context,
-                          builder: (_) => BlocProvider<ProfileCubit>.value(
-                            value: context.read<ProfileCubit>(),
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20.0),
-                              child: Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 50,
-                                  ),
-                                  TextFormField(
-                                    decoration: textFieldStyle,
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  TextFormField(
-                                    decoration: textFieldStyle,
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  TextFormField(
-                                    decoration: textFieldStyle,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )),
                 const SizedBox(
                   height: 50,
                 ),
@@ -82,7 +79,9 @@ class ProfilePage extends StatelessWidget {
                       border: Border.all(color: Color(0xff282828))),
                   child: CircleAvatar(
                     radius: 70,
-                    child: user != null ? Image.file(File(user.image)) : null,
+                    child: user != null && user.image != null
+                        ? Image.file(File(user.image ?? ''))
+                        : null,
                   ),
                 ),
                 Column(
@@ -114,6 +113,7 @@ class ProfilePage extends StatelessWidget {
                               orElse: () => 0,
                               loaded: (value) => value.data.length,
                             ),
+                            physics: const NeverScrollableScrollPhysics(),
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisSpacing: 5,
@@ -152,7 +152,90 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
-InputDecoration textFieldStyle = const InputDecoration(
-    enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-        borderSide: BorderSide(color: Color(0xff282828))));
+InputDecoration textFieldStyle = InputDecoration(
+  contentPadding: const EdgeInsetsDirectional.only(start: 20, top: 20),
+  hintStyle: TextStyle(color: const Color(0xff282828).withOpacity(0.5)),
+  // enabledBorder: OutlineInputBorder(
+  //     borderRadius: BorderRadius.all(Radius.circular(20)),
+  //     borderSide: BorderSide(color: Color(0xff282828)))
+);
+
+class EditProfile extends StatelessWidget {
+  const EditProfile({super.key, this.user});
+  final UserHive? user;
+  @override
+  Widget build(BuildContext context) {
+    final TextEditingController nameController = TextEditingController();
+    final TextEditingController userNameController = TextEditingController();
+    final TextEditingController bioController = TextEditingController();
+    final TextEditingController emailController = TextEditingController();
+
+    return Padding(
+      padding: const EdgeInsets.only(left: 25.0, right: 20),
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 50,
+          ),
+          TextFormField(
+            controller: nameController,
+            decoration: textFieldStyle.copyWith(hintText: 'name'),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          TextFormField(
+            controller: userNameController,
+            decoration: textFieldStyle.copyWith(hintText: 'user name'),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          TextFormField(
+            controller: emailController,
+            decoration: textFieldStyle.copyWith(hintText: 'email'),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          TextFormField(
+            controller: bioController,
+            maxLines: 3,
+            decoration: textFieldStyle.copyWith(
+              hintText: 'bio...',
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          ZoneButton(
+            child: const Text('Save'),
+            onTap: () {
+              if (user != null) {
+                
+                context.read<ProfileCubit>().updateUserInfo(
+                        user: UserHive(
+                      id: user!.id,
+                      email: emailController.text,
+                      userName: userNameController.text,
+                      name: nameController.text,
+                      bio: bioController.text,
+                      createdAt: DateTime.now(),
+                    ));
+              } else {
+                context.read<ProfileCubit>().registertUser(
+                        user: UserHive(
+                      email: emailController.text,
+                      userName: userNameController.text,
+                      name: nameController.text,
+                      bio: bioController.text,
+                      createdAt: DateTime.now(),
+                    ));
+              }
+            },
+          )
+        ],
+      ),
+    );
+  }
+}

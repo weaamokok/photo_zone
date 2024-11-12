@@ -17,7 +17,7 @@ class UserHiveAdapter extends TypeAdapter<UserHive> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return UserHive(
-      image: fields[0] as String,
+      image: fields[0] as String?,
       email: fields[5] as String?,
       createdAt: fields[3] as DateTime,
       userName: fields[2] as String,

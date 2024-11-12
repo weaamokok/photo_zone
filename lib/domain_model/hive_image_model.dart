@@ -21,6 +21,7 @@ class HivePhoto extends HiveObject {
   HivePhoto({
     required this.image,
     this.categoryId,
+    this.categoryName,
     this.id,
     required this.createdAt,
   });
@@ -29,8 +30,10 @@ class HivePhoto extends HiveObject {
   @HiveField(1)
   int? categoryId;
   @HiveField(2)
-  DateTime createdAt;
+  int? categoryName;
   @HiveField(3)
+  DateTime createdAt;
+  @HiveField(4)
   dynamic id;
 
   HivePhoto copyWith({

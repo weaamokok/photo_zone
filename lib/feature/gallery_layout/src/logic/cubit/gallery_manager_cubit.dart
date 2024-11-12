@@ -14,6 +14,9 @@ class GalleryManagerCubit extends Cubit<GalleryManagerState> {
             photoDeleted: false,
             photos: const GenericState.initial(),
             viewedPhotoCategory: const GenericState.initial()));
+            void searchForTag({required String tag}) {
+
+            }
   void fetchPhotos({int? categoryId}) async {
     if (categoryId != null) getPhotoCategory(categoryKey: categoryId);
     //emit(state.copyWith(isSuccess: false));

@@ -67,12 +67,32 @@ class LocalStorage {
     }
   }
 
+  Future<Either<String, List<HivePhoto>?>> searchCategory({
+    required String searchQuery,
+  }) async {
+    try {
+      final box = await _localStorage.photosBox;
+
+      final categories = box.values.where((element) {
+        return element.categoryName
+                ?.toString()
+                .toLowerCase()
+                .contains(searchQuery) ??
+            false;
+      }).toList();
+
+      return Right(categories);
+    } catch (e) {
+      print(' error in get photo ${e.toString()}');
+      return Left(e.toString());
+    }
+  }
+
   Future<Either<String, HivePhoto>> getPhoto({int? photoKey}) async {
     try {
       final box = await _localStorage.photosBox;
       final photo = box.values.firstWhere((element) {
         if (photoKey == null) return true;
-        print('elemrnmt key ${element.key}');
         return element.key == photoKey;
       });
 

@@ -34,8 +34,12 @@ class _GalleryLayoutPageState extends State<GalleryLayoutPage> {
                     orElse: () => Padding(
                         padding: const EdgeInsets.all(10),
                         child: TextFormField(
+                          onChanged: (value) {
+                            context.read<GalleryManagerCubit>();
+
+                          },
                           decoration: InputDecoration(
-                              hintText: 'Search',
+                              hintText: 'Search by photo tag',
                               prefixIcon: const Icon(
                                   EneftyIcons.search_favorite_outline),
                               enabledBorder: OutlineInputBorder(

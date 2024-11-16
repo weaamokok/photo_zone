@@ -30,7 +30,7 @@ class HivePhoto extends HiveObject {
   @HiveField(1)
   int? categoryId;
   @HiveField(2)
-  int? categoryName;
+  String? categoryName;
   @HiveField(3)
   DateTime createdAt;
   @HiveField(4)

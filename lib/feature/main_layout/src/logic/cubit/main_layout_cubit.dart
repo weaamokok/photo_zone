@@ -16,7 +16,6 @@ class MainLayoutCubit extends Cubit<MainLayoutState> {
 
   Future<Either<Exception, int>> addPhoto(
       {required File image, int? categoryId}) async {
-    print(';here');
     final imagePath = image.path;
     final photoKey = await localStorage.addPhoto(
         photoModel: HivePhoto(
@@ -28,7 +27,6 @@ class MainLayoutCubit extends Cubit<MainLayoutState> {
     return photoKey.fold(
       (l) => Left(Exception(l)),
       (r) {
-        print('photoKey when adding photo $r');
         return Right(r);
       },
     );

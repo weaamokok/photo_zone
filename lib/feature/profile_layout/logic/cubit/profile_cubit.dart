@@ -11,7 +11,6 @@ class ProfileCubit extends Cubit<ProfileState> {
   final LocalStorage localStorage;
 
   void registertUser({required UserHive user}) async {
-    print('registering user');
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final response = await localStorage.addUser(userHive: user);

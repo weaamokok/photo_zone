@@ -33,7 +33,6 @@ class MainLayoutPage extends StatelessWidget {
                 onTap: () async {
                   await selectOrTakePhoto(ImageSource.camera)
                       .then((image) async {
-                    print(image);
 
                     if (image != null) {
                       final key = await bloc.addPhoto(image: image);

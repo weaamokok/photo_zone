@@ -82,13 +82,13 @@ class HomePage extends StatelessWidget {
             ),
             const Divider(),
             Padding(
-              padding: EdgeInsets.only(left: 20.0, top: 30),
+              padding: const EdgeInsets.only(left: 20.0, top: 30),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
+                    const Row(
                       children: [
                         Icon(
                           EneftyIcons.folder_2_outline,
@@ -110,7 +110,7 @@ class HomePage extends StatelessWidget {
                         onPressed: () {
                           context.pushNamed('gallery');
                         },
-                        child: Text('view all'))
+                        child: const Text('view all'))
                   ],
                 ),
               ),

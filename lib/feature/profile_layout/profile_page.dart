@@ -76,7 +76,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(color: Color(0xff282828))),
+                      border: Border.all(color: const Color(0xff282828))),
                   child: CircleAvatar(
                     radius: 70,
                     child: user != null && user.image != null
@@ -122,7 +122,7 @@ class ProfilePage extends StatelessWidget {
                                     crossAxisCount: 2),
                             itemBuilder: (context, index) =>
                                 state.photos.maybeMap(
-                              orElse: () {},
+                              orElse: () => const SizedBox.shrink(),
                               loaded: (value) => Container(
                                 padding: const EdgeInsets.only(bottom: 0),
                                 decoration: BoxDecoration(

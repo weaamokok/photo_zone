@@ -22,7 +22,6 @@ final router = GoRouter(
       name: 'photo',
       builder: (context, state) {
         final extras = state.extra as PhotoExtra;
-        print('photo key ${extras.photo} ');
         return PhotoMaker.makePhotoPage(
             photoPath: extras.photoPath, photoKey: extras.photo);
       },

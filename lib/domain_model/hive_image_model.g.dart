@@ -19,7 +19,7 @@ class HivePhotoAdapter extends TypeAdapter<HivePhoto> {
     return HivePhoto(
       image: fields[0] as String,
       categoryId: fields[1] as int?,
-      categoryName: fields[2] as int?,
+      categoryName: fields[2] as String?,
       id: fields[4] as dynamic,
       createdAt: fields[3] as DateTime,
     );

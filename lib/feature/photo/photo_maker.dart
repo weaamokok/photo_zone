@@ -8,7 +8,6 @@ import 'package:photo_zone/local_storage/src/photo_local_database_repo.dart';
 class PhotoMaker {
   static Widget makePhotoPage(
       {required String photoPath, required int photoKey}) {
-    print('photo key in make photo $photoKey');
     return BlocProvider(
       create: (context) =>
           PhotoCubit(localRepo: locator<LocalStorage>(), photoKey: photoKey)

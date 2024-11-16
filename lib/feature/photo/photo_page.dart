@@ -58,7 +58,6 @@ class PhotoPage extends StatelessWidget {
                                 ),
                                 onPressed: () {
                                   if (state.selectedCategory != null) {
-                                    print('add photo to category');
                                     context
                                         .read<PhotoCubit>()
                                         .addPhotoToCategory();

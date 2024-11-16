@@ -28,7 +28,7 @@ class CategoryTag extends StatelessWidget {
               )),
           Text(
             category.categoryName ?? '',
-            style: TextStyle(fontSize: 15),
+            style: const TextStyle(fontSize: 15),
           ),
         ],
       ),

@@ -18,7 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$GalleryManagerState {
   GenericState<List<HivePhoto>> get photos =>
       throw _privateConstructorUsedError;
+  List<HivePhoto> get selectedPhotoList => throw _privateConstructorUsedError;
   bool get photoDeleted => throw _privateConstructorUsedError;
+  bool get isSelecting => throw _privateConstructorUsedError;
   GenericState<HiveCategory> get viewedPhotoCategory =>
       throw _privateConstructorUsedError;
 
@@ -37,7 +39,9 @@ abstract class $GalleryManagerStateCopyWith<$Res> {
   @useResult
   $Res call(
       {GenericState<List<HivePhoto>> photos,
+      List<HivePhoto> selectedPhotoList,
       bool photoDeleted,
+      bool isSelecting,
       GenericState<HiveCategory> viewedPhotoCategory});
 
   $GenericStateCopyWith<List<HivePhoto>, $Res> get photos;
@@ -60,7 +64,9 @@ class _$GalleryManagerStateCopyWithImpl<$Res, $Val extends GalleryManagerState>
   @override
   $Res call({
     Object? photos = null,
+    Object? selectedPhotoList = null,
     Object? photoDeleted = null,
+    Object? isSelecting = null,
     Object? viewedPhotoCategory = null,
   }) {
     return _then(_value.copyWith(
@@ -68,9 +74,17 @@ class _$GalleryManagerStateCopyWithImpl<$Res, $Val extends GalleryManagerState>
           ? _value.photos
           : photos // ignore: cast_nullable_to_non_nullable
               as GenericState<List<HivePhoto>>,
+      selectedPhotoList: null == selectedPhotoList
+          ? _value.selectedPhotoList
+          : selectedPhotoList // ignore: cast_nullable_to_non_nullable
+              as List<HivePhoto>,
       photoDeleted: null == photoDeleted
           ? _value.photoDeleted
           : photoDeleted // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSelecting: null == isSelecting
+          ? _value.isSelecting
+          : isSelecting // ignore: cast_nullable_to_non_nullable
               as bool,
       viewedPhotoCategory: null == viewedPhotoCategory
           ? _value.viewedPhotoCategory
@@ -111,7 +125,9 @@ abstract class _$$GalleryManagerStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {GenericState<List<HivePhoto>> photos,
+      List<HivePhoto> selectedPhotoList,
       bool photoDeleted,
+      bool isSelecting,
       GenericState<HiveCategory> viewedPhotoCategory});
 
   @override
@@ -134,7 +150,9 @@ class __$$GalleryManagerStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? photos = null,
+    Object? selectedPhotoList = null,
     Object? photoDeleted = null,
+    Object? isSelecting = null,
     Object? viewedPhotoCategory = null,
   }) {
     return _then(_$GalleryManagerStateImpl(
@@ -142,9 +160,17 @@ class __$$GalleryManagerStateImplCopyWithImpl<$Res>
           ? _value.photos
           : photos // ignore: cast_nullable_to_non_nullable
               as GenericState<List<HivePhoto>>,
+      selectedPhotoList: null == selectedPhotoList
+          ? _value._selectedPhotoList
+          : selectedPhotoList // ignore: cast_nullable_to_non_nullable
+              as List<HivePhoto>,
       photoDeleted: null == photoDeleted
           ? _value.photoDeleted
           : photoDeleted // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSelecting: null == isSelecting
+          ? _value.isSelecting
+          : isSelecting // ignore: cast_nullable_to_non_nullable
               as bool,
       viewedPhotoCategory: null == viewedPhotoCategory
           ? _value.viewedPhotoCategory
@@ -159,19 +185,33 @@ class __$$GalleryManagerStateImplCopyWithImpl<$Res>
 class _$GalleryManagerStateImpl implements _GalleryManagerState {
   _$GalleryManagerStateImpl(
       {required this.photos,
+      required final List<HivePhoto> selectedPhotoList,
       required this.photoDeleted,
-      required this.viewedPhotoCategory});
+      required this.isSelecting,
+      required this.viewedPhotoCategory})
+      : _selectedPhotoList = selectedPhotoList;
 
   @override
   final GenericState<List<HivePhoto>> photos;
+  final List<HivePhoto> _selectedPhotoList;
+  @override
+  List<HivePhoto> get selectedPhotoList {
+    if (_selectedPhotoList is EqualUnmodifiableListView)
+      return _selectedPhotoList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_selectedPhotoList);
+  }
+
   @override
   final bool photoDeleted;
+  @override
+  final bool isSelecting;
   @override
   final GenericState<HiveCategory> viewedPhotoCategory;
 
   @override
   String toString() {
-    return 'GalleryManagerState(photos: $photos, photoDeleted: $photoDeleted, viewedPhotoCategory: $viewedPhotoCategory)';
+    return 'GalleryManagerState(photos: $photos, selectedPhotoList: $selectedPhotoList, photoDeleted: $photoDeleted, isSelecting: $isSelecting, viewedPhotoCategory: $viewedPhotoCategory)';
   }
 
   @override
@@ -180,15 +220,24 @@ class _$GalleryManagerStateImpl implements _GalleryManagerState {
         (other.runtimeType == runtimeType &&
             other is _$GalleryManagerStateImpl &&
             (identical(other.photos, photos) || other.photos == photos) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedPhotoList, _selectedPhotoList) &&
             (identical(other.photoDeleted, photoDeleted) ||
                 other.photoDeleted == photoDeleted) &&
+            (identical(other.isSelecting, isSelecting) ||
+                other.isSelecting == isSelecting) &&
             (identical(other.viewedPhotoCategory, viewedPhotoCategory) ||
                 other.viewedPhotoCategory == viewedPhotoCategory));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, photos, photoDeleted, viewedPhotoCategory);
+  int get hashCode => Object.hash(
+      runtimeType,
+      photos,
+      const DeepCollectionEquality().hash(_selectedPhotoList),
+      photoDeleted,
+      isSelecting,
+      viewedPhotoCategory);
 
   /// Create a copy of GalleryManagerState
   /// with the given fields replaced by the non-null parameter values.
@@ -203,14 +252,20 @@ class _$GalleryManagerStateImpl implements _GalleryManagerState {
 abstract class _GalleryManagerState implements GalleryManagerState {
   factory _GalleryManagerState(
           {required final GenericState<List<HivePhoto>> photos,
+          required final List<HivePhoto> selectedPhotoList,
           required final bool photoDeleted,
+          required final bool isSelecting,
           required final GenericState<HiveCategory> viewedPhotoCategory}) =
       _$GalleryManagerStateImpl;
 
   @override
   GenericState<List<HivePhoto>> get photos;
   @override
+  List<HivePhoto> get selectedPhotoList;
+  @override
   bool get photoDeleted;
+  @override
+  bool get isSelecting;
   @override
   GenericState<HiveCategory> get viewedPhotoCategory;
 

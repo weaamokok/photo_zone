@@ -4,7 +4,6 @@ import 'package:photo_zone/common/widgets/zone_button.dart';
 import 'package:photo_zone/feature/home/src/cubit/add_category_cubit.dart';
 import 'package:photo_zone/feature/home/src/cubit/add_category_state.dart';
 import 'package:photo_zone/feature/home/src/home_page.dart';
-import 'package:photo_zone/utils/theme.dart';
 
 class AddCategoryBottomSheet extends StatelessWidget {
   const AddCategoryBottomSheet({super.key});

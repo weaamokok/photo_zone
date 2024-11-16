@@ -11,12 +11,30 @@ part 'gallery_manager_cubit.freezed.dart';
 class GalleryManagerCubit extends Cubit<GalleryManagerState> {
   GalleryManagerCubit({required this.localRepo})
       : super(GalleryManagerState(
+            isSelecting: false,
             photoDeleted: false,
+            selectedPhotoList: [],
             photos: const GenericState.initial(),
             viewedPhotoCategory: const GenericState.initial()));
-            void searchForTag({required String tag}) {
 
-            }
+  void searchForTag({required String tag}) {}
+
+  void startSelecting() {
+    emit(state.copyWith(isSelecting: !state.isSelecting));
+  }
+
+  void selectImage({required HivePhoto photo}) {
+    final selectedImages = state.selectedPhotoList.toList();
+    if (selectedImages.contains(photo)) {
+      selectedImages.removeWhere(
+        (element) => element.key == photo.key,
+      );
+    } else {
+      selectedImages.add(photo);
+    }
+    emit(state.copyWith(selectedPhotoList: selectedImages));
+  }
+
   void fetchPhotos({int? categoryId}) async {
     if (categoryId != null) getPhotoCategory(categoryKey: categoryId);
     //emit(state.copyWith(isSuccess: false));
@@ -24,14 +42,12 @@ class GalleryManagerCubit extends Cubit<GalleryManagerState> {
     // final response = await api.fetchFolders();
     final response = await localRepo.getPhotos(categoryId: categoryId);
     response.fold((l) {
-      print('error: $l');
       emit(state.copyWith(photos: const GenericState.failedProcess()));
     }, (r) {
       if (r != null && r.isEmpty) {
         emit(state.copyWith(photos: const GenericState.emptyPage()));
         return;
       }
-      print('object: $r');
       emit(state.copyWith(
           //remote imp
           // folders:r==null?[] :r
@@ -50,14 +66,14 @@ class GalleryManagerCubit extends Cubit<GalleryManagerState> {
     });
   }
 
-  void deletePhoto({required int photoIndex}) async {
-    emit(state.copyWith(photos: const GenericState.loading()));
+  void deletePhoto({required List<int> photoIndex}) async {
     final response = await localRepo.deletePhoto(photoKey: photoIndex);
     response.fold(
-      (l) => emit(state.copyWith(photos: const GenericState.failedProcess())),
+      (l) => emit(state.copyWith(photoDeleted: false)),
       (r) {
-        print('deleted');
-        emit(state.copyWith(photoDeleted: true));
+        emit(state.copyWith(
+            photoDeleted: true, isSelecting: false, selectedPhotoList: []));
+        fetchPhotos();
       },
     );
   }

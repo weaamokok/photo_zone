@@ -164,7 +164,7 @@ class _ViewPhotoState extends State<ViewPhoto>
 
 class SlidingPhotoAppBar extends StatelessWidget
     implements PreferredSizeWidget {
-  SlidingPhotoAppBar({
+  const SlidingPhotoAppBar({super.key, 
     required this.controller,
     required this.visible,
   });
@@ -177,7 +177,7 @@ class SlidingPhotoAppBar extends StatelessWidget
   Widget build(BuildContext context) {
     visible ? controller.reverse() : controller.forward();
     return SlideTransition(
-      position: Tween<Offset>(begin: Offset.zero, end: Offset(0, -1)).animate(
+      position: Tween<Offset>(begin: Offset.zero, end: const Offset(0, -1)).animate(
         CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn),
       ),
       child: AppBar(),
@@ -185,6 +185,5 @@ class SlidingPhotoAppBar extends StatelessWidget
   }
 
   @override
-  // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(50);
+  Size get preferredSize => const Size.fromHeight(50);
 }

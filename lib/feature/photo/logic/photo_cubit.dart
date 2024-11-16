@@ -16,7 +16,6 @@ class PhotoCubit extends Cubit<PhotoState> {
             photo: GenericState.initial(),
             categories: GenericState.initial(),
             isLoading: false)) {
-    print('init cubit');
     fetchPhoto();
     getCategories();
   }
@@ -28,11 +27,9 @@ class PhotoCubit extends Cubit<PhotoState> {
     final photo = await localRepo.getPhoto(photoKey: photoKey);
     photo.fold(
       (l) {
-        print('error in fetch photo $l');
         emit(state.copyWith(photo: GenericState.failedProcess(l)));
       },
       (r) {
-        print('fetchPhoto ${r.key}');
 
         emit(state.copyWith(photo: GenericState.loaded(r)));
       },
@@ -43,14 +40,12 @@ class PhotoCubit extends Cubit<PhotoState> {
     state.photo.maybeMap(
         orElse: () {},
         loaded: (photoModel) {
-          print('before edit${photoModel.data.key} ');
           final key = photoModel.data.key;
           
           final photo = photoModel.data.copyWith(
             categoryId: state.selectedCategory,
             id: key
           );
-          print('addPhotoToCategory ${photo.categoryId} ${photo.id} ');
           localRepo.updatePhoto(
             photoModel: photo,
           );
@@ -58,7 +53,6 @@ class PhotoCubit extends Cubit<PhotoState> {
   }
 
   void getCategories() async {
-    print('----> getCategories');
     final response = await localRepo.getCategories();
     response.fold(
       (l) => Println('error$l'),

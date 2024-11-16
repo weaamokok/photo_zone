@@ -19,7 +19,6 @@ class AddCategoryCubit extends Cubit<AddCategoryState> {
   final TextEditingController categoryNameController = TextEditingController();
   int? folderColor;
   void addCategory() async {
-    print('here');
     emit(
         state.copyWith(isSubmitting: true, isSuccess: false, isFailure: false));
     //remote

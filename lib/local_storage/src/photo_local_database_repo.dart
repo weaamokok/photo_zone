@@ -152,14 +152,16 @@ class LocalStorage {
     }
   }
 
-  Future<Either<String, Unit>> deletePhoto({required int photoKey}) async {
+  Future<Either<String, Unit>> deletePhoto(
+      {required List<int> photoKey}) async {
     try {
       final box = await _localStorage.photosBox;
       print('photo key $photoKey');
-      final index = getIndexOfPhoto(box: box, photoKey: photoKey);
-      print('index $index');
+      for (var key in photoKey) {
+        final index = getIndexOfPhoto(box: box, photoKey: key);
+        await box.deleteAt(index);
+      }
 
-      await box.deleteAt(index);
       return const Right(unit);
     } catch (e) {
       print('error in deleting photo ${e.toString()}');

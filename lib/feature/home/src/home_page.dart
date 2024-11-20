@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:photo_zone/common/widgets/cirular_icon.dart';
+import 'package:photo_zone/common/widgets/empty_state_widget.dart';
+import 'package:photo_zone/domain_model/category_model.dart';
 import 'package:photo_zone/feature/gallery_layout/src/galler_layout_composer.dart';
 import 'package:photo_zone/feature/home/src/cubit/add_category_cubit.dart';
 import 'package:photo_zone/feature/home/src/widget/add_category_bottomsheet.dart';
+import 'package:photo_zone/utils/theme.dart';
 import 'package:stacked_card_carousel/stacked_card_carousel.dart';
 
 import 'cubit/add_category_state.dart';
@@ -121,131 +124,10 @@ class HomePage extends StatelessWidget {
                   spaceBetweenItems: 70,
                   items: state.folders != null
                       ? state.folders!.isEmpty
-                          ? categories
-                              .map(
-                                (e) => InkWell(
-                                  // onTap: () => Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //       builder: (context) => GalleryLayoutPage(),
-                                  //     )),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              color: colors[e.indexOf(e)],
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(60),
-                                                      topRight:
-                                                          Radius.circular(10))),
-                                          height: 30,
-                                          width: 90,
-                                          padding:
-                                              const EdgeInsets.only(right: 10),
-                                          child: Align(
-                                            alignment: Alignment.centerRight,
-                                            child: Text(
-                                              categories[e.indexOf(e)],
-                                              style: const TextStyle(
-                                                overflow: TextOverflow.fade,
-                                                fontSize: 15,
-                                                fontFamily: 'Cairo',
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              color: colors[e.indexOf(e)],
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(10),
-                                                bottomRight:
-                                                    Radius.circular(10),
-                                                bottomLeft: Radius.circular(10),
-                                              )),
-                                          width: double.infinity,
-                                          height: 150,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 50, vertical: 20),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              )
-                              .toList()
+                          ? [const Folder(category: null)]
                           : state.folders!
                               .map(
-                                (e) => InkWell(
-                                  onTap: () => Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            GalleryComposer.makeGallery(
-                                                categoryId: e.id),
-                                      )),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              color: Color(e.folderColor),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(60),
-                                                      topRight:
-                                                          Radius.circular(10))),
-                                          height: 30,
-                                          width: 90,
-                                          padding:
-                                              const EdgeInsets.only(right: 10),
-                                          child: Align(
-                                            alignment: Alignment.centerRight,
-                                            child: Text(
-                                              e.categoryName,
-                                              style: TextStyle(
-                                                  overflow: TextOverflow.fade,
-                                                  fontSize: 15,
-                                                  fontFamily: 'Cairo',
-                                                  fontWeight: FontWeight.bold,
-                                                  color: const Color(0xff282828)
-                                                      .withOpacity(.8)),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              color: Color(e.folderColor),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(10),
-                                                bottomRight:
-                                                    Radius.circular(10),
-                                                bottomLeft: Radius.circular(10),
-                                              )),
-                                          width: double.infinity,
-                                          height: 150,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 50, vertical: 20),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                                (e) => Folder(category: e),
                               )
                               .toList()
                       : []),
@@ -253,6 +135,65 @@ class HomePage extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+}
+
+class Folder extends StatelessWidget {
+  const Folder({super.key, this.category});
+  final CategoryModel? category;
+  @override
+  Widget build(BuildContext context) {
+    final primaryColor = AppTheme.appTheme.primaryColor.value;
+    return InkWell(
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                GalleryComposer.makeGallery(categoryId: category?.id),
+          )),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  color: Color(category?.folderColor ?? primaryColor),
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(60),
+                      topRight: Radius.circular(10))),
+              height: 30,
+              width: 90,
+              padding: const EdgeInsets.only(right: 10),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  category?.categoryName ?? 'all photos',
+                  style: TextStyle(
+                      overflow: TextOverflow.fade,
+                      fontSize: 15,
+                      fontFamily: 'Cairo',
+                      fontWeight: FontWeight.bold,
+                      color: const Color(0xff282828).withOpacity(.8)),
+                ),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                  color: Color(category?.folderColor??primaryColor),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                  )),
+              width: double.infinity,
+              height: 150,
+              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

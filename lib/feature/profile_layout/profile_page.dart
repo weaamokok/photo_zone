@@ -4,6 +4,7 @@ import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photo_zone/common/widgets/cirular_icon.dart';
+import 'package:photo_zone/common/widgets/empty_state_widget.dart';
 import 'package:photo_zone/common/widgets/zone_button.dart';
 import 'package:photo_zone/domain_model/user_model.dart';
 import 'package:photo_zone/feature/gallery_layout/src/logic/cubit/gallery_manager_cubit.dart';
@@ -107,23 +108,27 @@ class ProfilePage extends StatelessWidget {
                       child:
                           BlocBuilder<GalleryManagerCubit, GalleryManagerState>(
                         builder: (context, state) {
-                          return GridView.builder(
-                            shrinkWrap: true,
-                            itemCount: state.photos.maybeMap(
-                              orElse: () => 0,
-                              loaded: (value) => value.data.length,
+                          return state.photos.maybeMap(
+                            orElse: () => const SizedBox.shrink(),
+                            emptyPage: (value) => Padding(
+                              padding: const EdgeInsets.only(top: 50.0),
+                              child: const EmptyStateWidget(
+                                icon: EneftyIcons.gallery_add_outline,
+                                text:
+                                    'No photos yet\n add some photos to your gallery',
+                              ),
                             ),
-                            physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisSpacing: 5,
-                                    mainAxisSpacing: 5,
-                                    childAspectRatio: .6,
-                                    crossAxisCount: 2),
-                            itemBuilder: (context, index) =>
-                                state.photos.maybeMap(
-                              orElse: () => const SizedBox.shrink(),
-                              loaded: (value) => Container(
+                            loaded: (value) => GridView.builder(
+                              shrinkWrap: true,
+                              itemCount: value.data.length,
+                              physics: const NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisSpacing: 5,
+                                      mainAxisSpacing: 5,
+                                      childAspectRatio: .6,
+                                      crossAxisCount: 2),
+                              itemBuilder: (context, index) => Container(
                                 padding: const EdgeInsets.only(bottom: 0),
                                 decoration: BoxDecoration(
                                     border: Border.all(),
@@ -212,7 +217,6 @@ class EditProfile extends StatelessWidget {
             child: const Text('Save'),
             onTap: () {
               if (user != null) {
-                
                 context.read<ProfileCubit>().updateUserInfo(
                         user: UserHive(
                       id: user!.id,

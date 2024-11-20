@@ -46,7 +46,9 @@ class AddCategoryCubit extends Cubit<AddCategoryState> {
     final response = await localRepo.getCategories();
     response.fold(
         (l) => emit(state.copyWith(isFailure: true)),
-        (r) => emit(state.copyWith(
+        (r) {
+          
+          emit(state.copyWith(
             isSuccess: false,
             //remote imp
             // folders:r==null?[] :r
@@ -63,7 +65,8 @@ class AddCategoryCubit extends Cubit<AddCategoryState> {
                         categoryName: e.categoryName ?? '',
                         folderColor: e.folderColor,
                         createdAt: e.createdAt.toString()))
-                    .toList())));
+                    .toList()));
+        });
   }
 
   void selectFolderColor({required String color, required int index}) {

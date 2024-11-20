@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:photo_zone/common/widgets/category_tag.dart';
 import 'package:photo_zone/common/widgets/cirular_icon.dart';
+import 'package:photo_zone/common/widgets/empty_state_widget.dart';
 import 'package:photo_zone/feature/gallery_layout/src/logic/cubit/gallery_manager_cubit.dart';
 import 'package:photo_zone/utils/theme.dart';
 
@@ -35,7 +36,8 @@ class _GalleryLayoutPageState extends State<GalleryLayoutPage> {
                             onTap: () {
                               showModalBottomSheet(
                                 context: context,
-                                constraints: const BoxConstraints(maxHeight: 200),
+                                constraints:
+                                    const BoxConstraints(maxHeight: 200),
                                 builder: (_) => BlocProvider.value(
                                   value: context.read<GalleryManagerCubit>(),
                                   child: AlertDialog(
@@ -214,26 +216,9 @@ class _GalleryLayoutPageState extends State<GalleryLayoutPage> {
                   ],
                 ),
               ),
-              emptyPage: (value) => const Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      EneftyIcons.folder_2_bold,
-                      color: Color(0xffE6A4B4),
-                      size: 100,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'No Photos in this folder yet 🌝',
-                      style: TextStyle(color: Color(0xff282828)),
-                    )
-                  ],
-                ),
-              ),
+              emptyPage: (value) => const EmptyStateWidget(
+                  icon: EneftyIcons.folder_2_bold,
+                  text: 'No Photos in this folder yet 🌝'),
               orElse: () => const SizedBox.shrink(),
               loading: (value) => const CircularProgressIndicator(),
               loaded: (value) {

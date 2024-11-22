@@ -24,6 +24,20 @@ class ProfileCubit extends Cubit<ProfileState> {
     );
   }
 
+  void updateUserProfileImage({required String image}) {
+    if (state.user.isLoaded) {
+      final user = state.user.maybeWhen(
+        orElse: () => null,
+        loaded: (data) => data,
+      );
+      if (user != null) {
+        final updateduser = user.copyWith(image: image);
+        updateUserInfo(user: updateduser);
+      }
+    }
+    emit(state.copyWith(imageFile: image));
+  }
+
   void fetchUserInfo() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final userId = prefs.getInt('userId');

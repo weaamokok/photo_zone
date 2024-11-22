@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:photo_zone/common/widgets/cirular_icon.dart';
 import 'package:photo_zone/common/widgets/empty_state_widget.dart';
 import 'package:photo_zone/common/widgets/zone_button.dart';
@@ -10,6 +11,7 @@ import 'package:photo_zone/domain_model/user_model.dart';
 import 'package:photo_zone/feature/gallery_layout/src/logic/cubit/gallery_manager_cubit.dart';
 import 'package:photo_zone/feature/profile_layout/logic/cubit/profile_cubit.dart';
 import 'package:photo_zone/feature/profile_layout/logic/cubit/profile_state.dart';
+import 'package:photo_zone/helpers/image_picker.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -26,7 +28,7 @@ class ProfilePage extends StatelessWidget {
                 alignment: AlignmentDirectional.topEnd,
                 child: CircularIcon(
                   icon: const Icon(
-                    EneftyIcons.edit_outline,
+                    EneftyIcons.user_edit_outline,
                   ),
                   onTap: () => showModalBottomSheet(
                     showDragHandle: true,
@@ -69,21 +71,37 @@ class ProfilePage extends StatelessWidget {
                 const SizedBox(
                   height: 50,
                 ),
-                Container(
-                  height: 130,
-                  width: 130,
-                  padding: const EdgeInsets.only(
-                    bottom: 5,
-                  ),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: const Color(0xff282828))),
-                  child: CircleAvatar(
-                    radius: 70,
-                    child: user != null && user.image != null
-                        ? Image.file(File(user.image ?? ''))
-                        : null,
-                  ),
+                Stack(
+                  children: [
+                    Container(
+                      height: 130,
+                      width: 130,
+                      padding: const EdgeInsets.only(
+                        bottom: 5,
+                      ),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: const Color(0xff282828))),
+                      child: CircleAvatar(
+                        radius: 70,
+                        backgroundImage: user != null && user.image != null
+                            ? FileImage(File(user.image ?? ''))
+                            : state.imageFile != null
+                                ? FileImage(File(state.imageFile ?? ''))
+                                : null,
+                      ),
+                    ),
+                    IconButton.filled(
+                        onPressed: () async {
+                          final image =
+                              await selectOrTakePhoto(ImageSource.gallery);
+                          if (image?.path != null) {
+                            context.read<ProfileCubit>().updateUserProfileImage(
+                                image: image?.path ?? '');
+                          }
+                        },
+                        icon: const Icon(EneftyIcons.edit_outline))
+                  ],
                 ),
                 Column(
                   children: [
@@ -110,9 +128,9 @@ class ProfilePage extends StatelessWidget {
                         builder: (context, state) {
                           return state.photos.maybeMap(
                             orElse: () => const SizedBox.shrink(),
-                            emptyPage: (value) => Padding(
-                              padding: const EdgeInsets.only(top: 50.0),
-                              child: const EmptyStateWidget(
+                            emptyPage: (value) => const Padding(
+                              padding: EdgeInsets.only(top: 50.0),
+                              child: EmptyStateWidget(
                                 icon: EneftyIcons.gallery_add_outline,
                                 text:
                                     'No photos yet\n add some photos to your gallery',

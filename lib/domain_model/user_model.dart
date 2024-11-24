@@ -2,7 +2,7 @@ import 'package:hive_flutter/adapters.dart';
 
 part 'user_model.g.dart';
 
-@HiveType(typeId: 1)
+@HiveType(typeId: 3)
 class UserHive extends HiveObject {
   UserHive(
       {this.image,

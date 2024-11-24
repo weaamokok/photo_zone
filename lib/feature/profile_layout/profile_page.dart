@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:photo_zone/common/widgets/cirular_icon.dart';
 import 'package:photo_zone/common/widgets/empty_state_widget.dart';
 import 'package:photo_zone/common/widgets/zone_button.dart';
+import 'package:photo_zone/domain_model/generic_state.dart';
 import 'package:photo_zone/domain_model/user_model.dart';
 import 'package:photo_zone/feature/gallery_layout/src/logic/cubit/gallery_manager_cubit.dart';
 import 'package:photo_zone/feature/profile_layout/logic/cubit/profile_cubit.dart';
@@ -92,14 +93,18 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                     IconButton.filled(
-                        onPressed: () async {
-                          final image =
-                              await selectOrTakePhoto(ImageSource.gallery);
-                          if (image?.path != null) {
-                            context.read<ProfileCubit>().updateUserProfileImage(
-                                image: image?.path ?? '');
-                          }
-                        },
+                        onPressed: state.user.isLoading
+                            ? () async {
+                                final image = await selectOrTakePhoto(
+                                    ImageSource.gallery);
+                                if (image?.path != null) {
+                                  context
+                                      .read<ProfileCubit>()
+                                      .updateUserProfileImage(
+                                          image: image?.path ?? '');
+                                }
+                              }
+                            : null,
                         icon: const Icon(EneftyIcons.edit_outline))
                   ],
                 ),

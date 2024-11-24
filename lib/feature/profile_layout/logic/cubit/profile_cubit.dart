@@ -25,7 +25,9 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   void updateUserProfileImage({required String image}) {
+     print('user state ->${state.user.isLoaded}');
     if (state.user.isLoaded) {
+     
       final user = state.user.maybeWhen(
         orElse: () => null,
         loaded: (data) => data,
@@ -63,6 +65,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   updateUserInfo({required UserHive user}) async {
     emit(state.copyWith(user: const GenericState.loading()));
+
     final response = await localStorage.updateUserInfo(user: user);
     response.fold(
       (l) => emit(state.copyWith(user: const GenericState.failedProcess())),

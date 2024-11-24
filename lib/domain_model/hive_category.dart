@@ -17,7 +17,7 @@ part 'hive_category.g.dart';
 //   factory HiveCategory.fromJson(Map<String, dynamic> json) =>
 //       _$HiveCategoryFromJson(json);
 // }
-@HiveType(typeId: 2)
+@HiveType(typeId: 5)
 class HiveCategory extends HiveObject {
   HiveCategory({
     required this.categoryName,

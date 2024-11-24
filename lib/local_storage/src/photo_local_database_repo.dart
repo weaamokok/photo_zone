@@ -70,17 +70,19 @@ class LocalStorage {
   Future<Either<String, UserHive>> updateUserInfo(
       {required UserHive user}) async {
     try {
+      print('in update');
       final box = await _localStorage.userBox;
       final index = box.values.toList().indexWhere((element) {
         return element.key == user.id;
       });
       if (index != -1) {
-        await box.putAt(index, user);
+        await box.putAt(index, user).then((value) => print('updates'));
         return Right(user);
       } else {
         return const Left('user not found');
       }
     } catch (e) {
+      print('error updating user');
       return Left(e.toString());
     }
   }

@@ -8,7 +8,7 @@ part of 'user_model.dart';
 
 class UserHiveAdapter extends TypeAdapter<UserHive> {
   @override
-  final int typeId = 1;
+  final int typeId = 3;
 
   @override
   UserHive read(BinaryReader reader) {

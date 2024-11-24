@@ -11,7 +11,9 @@ class LocalStorageSetup {
         ..registerAdapter(HiveCategoryAdapter())
         ..registerAdapter(HivePhotoAdapter())
         ..registerAdapter(UserHiveAdapter());
-    } catch (_) {}
+    } catch (e) {
+      print('$e');
+    }
   }
 
   final HiveInterface _hive;

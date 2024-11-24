@@ -7,7 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit({required this.localStorage})
-      : super(const ProfileState(user: GenericState.initial()));
+      : super(const ProfileState(
+            user: GenericState.initial(), navigateBack: false));
   final LocalStorage localStorage;
 
   void registertUser({required UserHive user}) async {
@@ -20,14 +21,14 @@ class ProfileCubit extends Cubit<ProfileState> {
       },
       (r) {
         prefs.setInt('userId', r);
+        emit(state.copyWith(navigateBack: true));
       },
     );
   }
 
   void updateUserProfileImage({required String image}) {
-     print('user state ->${state.user.isLoaded}');
+    print('user state ->${state.user.isLoaded}');
     if (state.user.isLoaded) {
-     
       final user = state.user.maybeWhen(
         orElse: () => null,
         loaded: (data) => data,
@@ -68,8 +69,10 @@ class ProfileCubit extends Cubit<ProfileState> {
 
     final response = await localStorage.updateUserInfo(user: user);
     response.fold(
-      (l) => emit(state.copyWith(user: const GenericState.failedProcess())),
-      (r) => emit(state.copyWith(user: GenericState.loaded(r))),
+      (l) => emit(state.copyWith(
+          user: const GenericState.failedProcess(), navigateBack: false)),
+      (r) => emit(
+          state.copyWith(user: GenericState.loaded(r), navigateBack: true)),
     );
   }
 }

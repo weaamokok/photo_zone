@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
@@ -5,11 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:photo_zone/common/widgets/cirular_icon.dart';
-import 'package:photo_zone/common/widgets/empty_state_widget.dart';
 import 'package:photo_zone/domain_model/category_model.dart';
 import 'package:photo_zone/feature/gallery_layout/src/galler_layout_composer.dart';
 import 'package:photo_zone/feature/home/src/cubit/add_category_cubit.dart';
 import 'package:photo_zone/feature/home/src/widget/add_category_bottomsheet.dart';
+import 'package:photo_zone/feature/profile_layout/logic/cubit/profile_cubit.dart';
 import 'package:photo_zone/utils/theme.dart';
 import 'package:stacked_card_carousel/stacked_card_carousel.dart';
 
@@ -22,6 +24,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AddCategoryCubit, AddCategoryState>(
       builder: (context, state) {
+        final profileCubit = context.read<ProfileCubit>();
+
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -34,11 +38,14 @@ class HomePage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const CircleAvatar(
-                    backgroundImage: CachedNetworkImageProvider(
-                        'https://ratedrnb.com/cdn/2020/06/UMI.v1.png'),
-                    radius: 25,
-                  ),
+                  CircleAvatar(
+                      radius: 25,
+                      backgroundImage: profileCubit.state.user.maybeMap(
+                        orElse: () => const CachedNetworkImageProvider(
+                            'https://ratedrnb.com/cdn/2020/06/UMI.v1.png'),
+                        loaded: (value) =>
+                            FileImage(File(value.data.image ?? '')),
+                      )),
                   Row(
                     children: [
                       CircularIcon(
@@ -181,7 +188,7 @@ class Folder extends StatelessWidget {
             ),
             Container(
               decoration: BoxDecoration(
-                  color: Color(category?.folderColor??primaryColor),
+                  color: Color(category?.folderColor ?? primaryColor),
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(10),
                     bottomRight: Radius.circular(10),

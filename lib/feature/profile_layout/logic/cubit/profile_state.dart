@@ -11,5 +11,6 @@ class ProfileState with _$ProfileState {
     String? imageFile,
     String? name,
     String? email,
+   required bool navigateBack
   }) = _ProfileState;
 }

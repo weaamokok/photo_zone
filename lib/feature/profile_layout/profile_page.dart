@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         actions: [
           Padding(
@@ -33,8 +35,10 @@ class ProfilePage extends StatelessWidget {
                   ),
                   onTap: () => showModalBottomSheet(
                     showDragHandle: true,
+                    isDismissible: true,
+                    scrollControlDisabledMaxHeightRatio: .1,
                     context: context,
-                    scrollControlDisabledMaxHeightRatio: 0.7,
+                    isScrollControlled: true,
                     builder: (_) => BlocProvider<ProfileCubit>.value(
                       value: context.read<ProfileCubit>()..fetchUserInfo(),
                       child: BlocBuilder<ProfileCubit, ProfileState>(
@@ -57,7 +61,10 @@ class ProfilePage extends StatelessWidget {
               )),
         ],
       ),
-      body: BlocBuilder<ProfileCubit, ProfileState>(
+      body: BlocConsumer<ProfileCubit, ProfileState>(
+        listener: (context, state) => state.navigateBack
+            ? Navigator.of(context).pop()
+            : context.read<ProfileCubit>().fetchUserInfo(),
         builder: (context, state) {
           final user = state.user
               .maybeMap(
@@ -65,6 +72,7 @@ class ProfilePage extends StatelessWidget {
                 orElse: () => null,
               )
               ?.data;
+          final bloc = context.read<ProfileCubit>();
           return SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -93,15 +101,13 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                     IconButton.filled(
-                        onPressed: state.user.isLoading
+                        onPressed: state.user.isLoaded
                             ? () async {
                                 final image = await selectOrTakePhoto(
                                     ImageSource.gallery);
                                 if (image?.path != null) {
-                                  context
-                                      .read<ProfileCubit>()
-                                      .updateUserProfileImage(
-                                          image: image?.path ?? '');
+                                  bloc.updateUserProfileImage(
+                                      image: image?.path ?? '');
                                 }
                               }
                             : null,
@@ -197,71 +203,80 @@ class EditProfile extends StatelessWidget {
     final TextEditingController userNameController = TextEditingController();
     final TextEditingController bioController = TextEditingController();
     final TextEditingController emailController = TextEditingController();
+    nameController.text = user?.name ?? '';
+    userNameController.text = user?.userName ?? '';
+    bioController.text = user?.bio ?? '';
+    emailController.text = user?.email ?? '';
 
-    return Padding(
-      padding: const EdgeInsets.only(left: 25.0, right: 20),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 50,
-          ),
-          TextFormField(
-            controller: nameController,
-            decoration: textFieldStyle.copyWith(hintText: 'name'),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          TextFormField(
-            controller: userNameController,
-            decoration: textFieldStyle.copyWith(hintText: 'user name'),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          TextFormField(
-            controller: emailController,
-            decoration: textFieldStyle.copyWith(hintText: 'email'),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          TextFormField(
-            controller: bioController,
-            maxLines: 3,
-            decoration: textFieldStyle.copyWith(
-              hintText: 'bio...',
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.only(
+            left: 25.0,
+            right: 20,
+            bottom: MediaQuery.of(context).viewInsets.bottom),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 50,
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          ZoneButton(
-            child: const Text('Save'),
-            onTap: () {
-              if (user != null) {
-                context.read<ProfileCubit>().updateUserInfo(
-                        user: UserHive(
-                      id: user!.id,
-                      email: emailController.text,
-                      userName: userNameController.text,
-                      name: nameController.text,
-                      bio: bioController.text,
-                      createdAt: DateTime.now(),
-                    ));
-              } else {
-                context.read<ProfileCubit>().registertUser(
-                        user: UserHive(
-                      email: emailController.text,
-                      userName: userNameController.text,
-                      name: nameController.text,
-                      bio: bioController.text,
-                      createdAt: DateTime.now(),
-                    ));
-              }
-            },
-          )
-        ],
+            TextFormField(
+              controller: nameController,
+              decoration: textFieldStyle.copyWith(hintText: 'name'),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              controller: userNameController,
+              decoration: textFieldStyle.copyWith(hintText: 'user name'),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              controller: emailController,
+              decoration: textFieldStyle.copyWith(hintText: 'email'),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              controller: bioController,
+              maxLines: 3,
+              decoration: textFieldStyle.copyWith(
+                hintText: 'bio...',
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            ZoneButton(
+              child: const Text('Save'),
+              onTap: () {
+                if (user != null) {
+                  context.read<ProfileCubit>().updateUserInfo(
+                          user: UserHive(
+                        id: user!.id,
+                        email: emailController.text,
+                        userName: userNameController.text,
+                        name: nameController.text,
+                        bio: bioController.text,
+                        createdAt: DateTime.now(),
+                      ));
+                } else {
+                  context.read<ProfileCubit>().registertUser(
+                          user: UserHive(
+                        email: emailController.text,
+                        userName: userNameController.text,
+                        name: nameController.text,
+                        bio: bioController.text,
+                        createdAt: DateTime.now(),
+                      ));
+                }
+              },
+            )
+          ],
+        ),
       ),
     );
   }

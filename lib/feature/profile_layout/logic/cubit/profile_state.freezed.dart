@@ -20,6 +20,7 @@ mixin _$ProfileState {
   String? get imageFile => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
+  bool get navigateBack => throw _privateConstructorUsedError;
 
   /// Create a copy of ProfileState
   /// with the given fields replaced by the non-null parameter values.
@@ -38,7 +39,8 @@ abstract class $ProfileStateCopyWith<$Res> {
       {GenericState<UserHive> user,
       String? imageFile,
       String? name,
-      String? email});
+      String? email,
+      bool navigateBack});
 
   $GenericStateCopyWith<UserHive, $Res> get user;
 }
@@ -62,6 +64,7 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
     Object? imageFile = freezed,
     Object? name = freezed,
     Object? email = freezed,
+    Object? navigateBack = null,
   }) {
     return _then(_value.copyWith(
       user: null == user
@@ -80,6 +83,10 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
+      navigateBack: null == navigateBack
+          ? _value.navigateBack
+          : navigateBack // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -106,7 +113,8 @@ abstract class _$$ProfileStateImplCopyWith<$Res>
       {GenericState<UserHive> user,
       String? imageFile,
       String? name,
-      String? email});
+      String? email,
+      bool navigateBack});
 
   @override
   $GenericStateCopyWith<UserHive, $Res> get user;
@@ -129,6 +137,7 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
     Object? imageFile = freezed,
     Object? name = freezed,
     Object? email = freezed,
+    Object? navigateBack = null,
   }) {
     return _then(_$ProfileStateImpl(
       user: null == user
@@ -147,6 +156,10 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
+      navigateBack: null == navigateBack
+          ? _value.navigateBack
+          : navigateBack // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -155,7 +168,11 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
 
 class _$ProfileStateImpl implements _ProfileState {
   const _$ProfileStateImpl(
-      {required this.user, this.imageFile, this.name, this.email});
+      {required this.user,
+      this.imageFile,
+      this.name,
+      this.email,
+      required this.navigateBack});
 
   @override
   final GenericState<UserHive> user;
@@ -165,10 +182,12 @@ class _$ProfileStateImpl implements _ProfileState {
   final String? name;
   @override
   final String? email;
+  @override
+  final bool navigateBack;
 
   @override
   String toString() {
-    return 'ProfileState(user: $user, imageFile: $imageFile, name: $name, email: $email)';
+    return 'ProfileState(user: $user, imageFile: $imageFile, name: $name, email: $email, navigateBack: $navigateBack)';
   }
 
   @override
@@ -180,11 +199,14 @@ class _$ProfileStateImpl implements _ProfileState {
             (identical(other.imageFile, imageFile) ||
                 other.imageFile == imageFile) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.email, email) || other.email == email));
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.navigateBack, navigateBack) ||
+                other.navigateBack == navigateBack));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user, imageFile, name, email);
+  int get hashCode =>
+      Object.hash(runtimeType, user, imageFile, name, email, navigateBack);
 
   /// Create a copy of ProfileState
   /// with the given fields replaced by the non-null parameter values.
@@ -200,7 +222,8 @@ abstract class _ProfileState implements ProfileState {
       {required final GenericState<UserHive> user,
       final String? imageFile,
       final String? name,
-      final String? email}) = _$ProfileStateImpl;
+      final String? email,
+      required final bool navigateBack}) = _$ProfileStateImpl;
 
   @override
   GenericState<UserHive> get user;
@@ -210,6 +233,8 @@ abstract class _ProfileState implements ProfileState {
   String? get name;
   @override
   String? get email;
+  @override
+  bool get navigateBack;
 
   /// Create a copy of ProfileState
   /// with the given fields replaced by the non-null parameter values.

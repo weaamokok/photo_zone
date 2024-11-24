@@ -42,6 +42,7 @@ class LocalStorage {
 
       return Right(categories);
     } catch (l) {
+      print('error ${l.toString()}');
       return Left(l.toString());
     }
   }

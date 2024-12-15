@@ -74,7 +74,15 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   json_serializable: ^6.7.1
   build_runner: ^2.4.8
+  patrol: ^3.13.1
 
+patrol:
+  app_name: Photo Zone
+  android:
+    package_name: com.photo_zone
+  ios:
+    bundle_id: com.photo_zone
+  
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

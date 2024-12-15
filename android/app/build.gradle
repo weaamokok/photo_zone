@@ -51,7 +51,13 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
+        testInstrumentationRunner "pl.leancode.patrol.PatrolJUnitRunner"
+        testInstrumentationRunnerArguments clearPackageData: "true"
+
     }
+      testOptions {
+    execution "ANDROIDX_TEST_ORCHESTRATOR"
+  }
 
     buildTypes {
         release {
@@ -60,6 +66,10 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
+         debug {
+        minifyEnabled false
+        shrinkResources false
+    }
     }
 }
 
@@ -71,4 +81,6 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:32.7.2')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.android.support:multidex:2.0.1'
+    androidTestUtil "androidx.test:orchestrator:1.5.1"
+
 }
